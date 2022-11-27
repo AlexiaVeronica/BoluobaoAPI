@@ -39,11 +39,25 @@ func GET_SYS_TAG_LIST() BoluobaoStructs.SysTags {
 	return SysTags
 }
 
-func GET_ACTPUSH() BoluobaoStructs.SysTags {
-	var SysTags BoluobaoStructs.SysTags
+func GET_ACTPUSH() BoluobaoStructs.Actpush {
+	var Actpush BoluobaoStructs.Actpush
 	params := map[string]string{"filter": "android", "page": "0", "size": "20"}
-	request.Get("actpush").AddAll(params).NewRequests().Unmarshal(&SysTags)
-	return SysTags
+	request.Get("actpush").AddAll(params).NewRequests().Unmarshal(&Actpush)
+	return Actpush
+}
+
+func GET_SPECIALPUSHS() BoluobaoStructs.FXrecommend {
+	var FXrecommend BoluobaoStructs.FXrecommend
+	params := map[string]string{"pushNames": "hotpush", "page": "0", "size": "10", "expand": "sysTags,discount,discountExpireDate,homeFlag"}
+	request.Get("novels/specialpushs").AddAll(params).NewRequests().Unmarshal(&FXrecommend)
+	return FXrecommend
+}
+
+func GET_SPECIALPUSHS2() BoluobaoStructs.NewBookRecommend {
+	var NewBookRecommend BoluobaoStructs.NewBookRecommend
+	params := map[string]string{"pushNames": "newpush", "page": "0", "size": "10", "expand": "sysTags,discount,discountExpireDate,homeFlag"}
+	request.Get("novels/specialpushs").AddAll(params).NewRequests().Unmarshal(&NewBookRecommend).WriteResultString()
+	return NewBookRecommend
 }
 
 func GET_CATALOGUE(NovelID string) BoluobaoStructs.Catalogue {
