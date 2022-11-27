@@ -55,6 +55,6 @@ func TestDownload(t *testing.T) {
 		}
 		GetChapter(strconv.Itoa(BookInfo.Data.NovelID))
 	} else {
-		fmt.Println("Error:", BookInfo.Status.Msg)
+		fmt.Println("BookInfo Error:", BookInfo.Status.Msg)
 	}
 }

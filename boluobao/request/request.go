@@ -33,15 +33,13 @@ func (is *HttpUtils) NewRequests() *HttpUtils {
 		panic(err)
 	}
 	is.result_body = nil
-	is.response.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	is.response.Header.Set("sf-minip-info", "minip_novel/1.0.70(android;11)/wxmp")
-	is.response.Header.Set("Cookie", is.Cookie)
+	is.set_headers()
 
 	if response, ok := http.DefaultClient.Do(is.response); ok == nil {
 		is.cookie = response.Cookies()
 		is.result_body, _ = io.ReadAll(response.Body)
 	} else {
-		fmt.Println("Error: ", ok)
+		fmt.Println("NewRequests:", ok)
 	}
 	return is
 }
@@ -49,7 +47,7 @@ func (is *HttpUtils) NewRequests() *HttpUtils {
 func (is *HttpUtils) Unmarshal(s any) *HttpUtils {
 	err := json.Unmarshal(is.result_body, s)
 	if err != nil {
-		fmt.Println("Error: ", err)
+		fmt.Println("Unmarshal: ", err)
 	}
 	return is
 }
