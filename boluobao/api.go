@@ -3,7 +3,6 @@ package boluobao
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/BoluobaoStructs"
-	"github.com/VeronicaAlexia/BoluobaoAPI/BoluobaoStructs/bookshelf"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
 	"os"
 	"strconv"
@@ -22,8 +21,8 @@ func GET_ACCOUNT_INFORMATION() BoluobaoStructs.Account {
 	return Account
 }
 
-func GET_BOOK_SHELF_INFORMATION() bookshelf.InfoData {
-	var bookshelfData bookshelf.InfoData
+func GET_BOOK_SHELF_INFORMATION() BoluobaoStructs.InfoData {
+	var bookshelfData BoluobaoStructs.InfoData
 	request.Get("user/Pockets").Add("expand", "novels").NewRequests().Unmarshal(&bookshelfData)
 	return bookshelfData
 }

@@ -1,13 +1,8 @@
 package BoluobaoStructs
 
 type Content struct {
-	Status struct {
-		HTTPCode  int         `json:"httpCode"`
-		ErrorCode int         `json:"errorCode"`
-		MsgType   int         `json:"msgType"`
-		Msg       interface{} `json:"msg"`
-	} `json:"status"`
-	Data struct {
+	Status status `json:"status"`
+	Data   struct {
 		ChapID     int    `json:"chapId"`
 		NovelID    int    `json:"novelId"`
 		VolumeID   int    `json:"volumeId"`

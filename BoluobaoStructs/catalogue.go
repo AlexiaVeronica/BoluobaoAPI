@@ -1,14 +1,8 @@
 package BoluobaoStructs
 
 type Catalogue struct {
-	Status Status `json:"status"`
+	Status status `json:"status"`
 	Data   Data   `json:"data"`
-}
-type Status struct {
-	HTTPCode  int         `json:"httpCode"`
-	ErrorCode int         `json:"errorCode"`
-	MsgType   int         `json:"msgType"`
-	Msg       interface{} `json:"msg"`
 }
 type ChapterList struct {
 	ChapID              int         `json:"chapId"`

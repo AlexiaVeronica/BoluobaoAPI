@@ -1,13 +1,8 @@
 package BoluobaoStructs
 
 type Task struct {
-	Status struct {
-		HttpCode  int         `json:"httpCode"`
-		ErrorCode int         `json:"errorCode"`
-		MsgType   int         `json:"msgType"`
-		Msg       interface{} `json:"msg"`
-	} `json:"status"`
-	Data []struct {
+	Status status `json:"status"`
+	Data   []struct {
 		RecordId    int    `json:"recordId"`
 		TaskId      int    `json:"taskId"`
 		RequireNum  int    `json:"requireNum"`

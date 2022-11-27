@@ -1,13 +1,8 @@
 package BoluobaoStructs
 
 type Account struct {
-	Status struct {
-		HTTPCode  int    `json:"httpCode"`
-		ErrorCode int    `json:"errorCode"`
-		MsgType   int    `json:"msgType"`
-		Msg       string `json:"msg"`
-	} `json:"status"`
-	Data struct {
+	Status status `json:"status"`
+	Data   struct {
 		UserName     string `json:"userName"`
 		NickName     string `json:"nickName"`
 		Email        string `json:"email"`
