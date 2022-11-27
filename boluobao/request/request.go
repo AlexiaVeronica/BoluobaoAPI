@@ -25,13 +25,9 @@ func NewHttpUtils(host string, path string, method string) *HttpUtils {
 func (is *HttpUtils) NewRequests() *HttpUtils {
 	is.result_body = nil
 	if request, err := http.NewRequest(is.method, is.url, is.GetEncodeParams()); err != nil {
-		fmt.Println("Error: ", err)
-		is.response = nil
+		panic(err)
 	} else {
 		is.response = request
-	}
-	if is.response != nil {
-		panic("response is nil, please check your code")
 	}
 	is.response.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	is.response.Header.Set("sf-minip-info", "minip_novel/1.0.70(android;11)/wxmp")
