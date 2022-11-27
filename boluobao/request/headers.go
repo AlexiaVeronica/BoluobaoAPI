@@ -20,7 +20,7 @@ func (is *HttpUtils) set_headers() {
 	} else {
 		fmt.Println("Error: APP_TYPE.App is not set")
 	}
-	fmt.Println(Header)
+	//fmt.Println(Header)
 	for HeaderKey, HeaderValue := range Header {
 		is.response.Header.Set(HeaderKey, HeaderValue)
 
