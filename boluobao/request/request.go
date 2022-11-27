@@ -1,13 +1,11 @@
 package request
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
-	"strings"
 )
 
 type HttpUtils struct {
@@ -16,60 +14,26 @@ type HttpUtils struct {
 	Cookie      string
 	cookie      []*http.Cookie
 	response    *http.Request
-	app_type    string
 	query_data  *url.Values
 	result_body []byte
 }
 
-func (is *HttpUtils) GetEncodeParams() *bytes.Reader {
-	return bytes.NewReader([]byte(is.query_data.Encode()))
-}
-func (is *HttpUtils) GetResultBody() string {
-	return string(is.result_body)
-}
-
-func (is *HttpUtils) GetCookie() []*http.Cookie {
-	return is.cookie
-}
-func (is *HttpUtils) GetValue(key string) string {
-	return is.query_data.Get(key)
-}
-
-func (is *HttpUtils) GetUrl() string {
-	return is.url
-}
-
-func (is *HttpUtils) Add(key string, value string) *HttpUtils {
-	is.query_data.Add(key, value)
-	return is
-}
-func MustNewRequest(method, url string, data io.Reader) *http.Request {
-	if request, err := http.NewRequest(method, url, data); err != nil {
-		fmt.Println("Error: ", err)
-		return nil
-	} else {
-		return request
-	}
-}
-
-func Get(api_url string) *HttpUtils {
-	return NewHttpUtils(api_url, "GET")
-}
-func Post(api_url string) *HttpUtils {
-	return NewHttpUtils(api_url, "POST")
-}
-
 func NewHttpUtils(api_url, method string) *HttpUtils {
-	return &HttpUtils{
-		method:     method,
-		query_data: &url.Values{},
-		url:        "https://minipapi.sfacg.com/pas/mpapi/" + strings.ReplaceAll(api_url, "https://minipapi.sfacg.com/pas/mpapi/", ""),
-	}
+	api_url = "https://minipapi.sfacg.com/pas/mpapi/" + api_url
+	return &HttpUtils{method: method, query_data: &url.Values{}, url: api_url}
 }
 
 func (is *HttpUtils) NewRequests() *HttpUtils {
 	is.result_body = nil
-	is.response = MustNewRequest(is.method, is.url, is.GetEncodeParams())
+	if request, err := http.NewRequest(is.method, is.url, is.GetEncodeParams()); err != nil {
+		fmt.Println("Error: ", err)
+		is.response = nil
+	} else {
+		is.response = request
+	}
+	if is.response != nil {
+		panic("response is nil, please check your code")
+	}
 	is.response.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	is.response.Header.Set("sf-minip-info", "minip_novel/1.0.70(android;11)/wxmp")
 	is.response.Header.Set("Cookie", is.Cookie)
