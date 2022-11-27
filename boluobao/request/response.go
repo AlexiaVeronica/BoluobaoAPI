@@ -1,11 +1,11 @@
 package request
 
-func Get(api_url string) *HttpUtils {
-	return NewHttpUtils(api_url, "GET")
+func Get(path string) *HttpUtils {
+	return NewHttpUtils("https://minipapi.sfacg.com/pas/mpapi/", path, "GET")
 }
-func Post(api_url string) *HttpUtils {
-	return NewHttpUtils(api_url, "POST")
+func Post(path string) *HttpUtils {
+	return NewHttpUtils("https://minipapi.sfacg.com/pas/mpapi/", path, "POST")
 }
-func Put(api_url string) *HttpUtils {
-	return NewHttpUtils(api_url, "PUT")
+func Put(path string) *HttpUtils {
+	return NewHttpUtils("https://minipapi.sfacg.com/pas/mpapi/", path, "PUT")
 }

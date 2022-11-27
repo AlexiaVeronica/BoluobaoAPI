@@ -18,9 +18,8 @@ type HttpUtils struct {
 	result_body []byte
 }
 
-func NewHttpUtils(api_url, method string) *HttpUtils {
-	api_url = "https://minipapi.sfacg.com/pas/mpapi/" + api_url
-	return &HttpUtils{method: method, query_data: &url.Values{}, url: api_url}
+func NewHttpUtils(host string, path string, method string) *HttpUtils {
+	return &HttpUtils{method: method, query_data: &url.Values{}, url: host + path}
 }
 
 func (is *HttpUtils) NewRequests() *HttpUtils {
