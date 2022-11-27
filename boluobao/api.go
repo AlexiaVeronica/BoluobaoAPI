@@ -33,6 +33,19 @@ func GET_SPECIALPUSH() BoluobaoStructs.Specialpush {
 	return Specialpush
 }
 
+func GET_SYS_TAG_LIST() BoluobaoStructs.SysTags {
+	var SysTags BoluobaoStructs.SysTags
+	request.Get("novels/0/sysTags").Add("filter", "push").NewRequests().Unmarshal(&SysTags)
+	return SysTags
+}
+
+func GET_ACTPUSH() BoluobaoStructs.SysTags {
+	var SysTags BoluobaoStructs.SysTags
+	params := map[string]string{"filter": "android", "page": "0", "size": "20"}
+	request.Get("actpush").AddAll(params).NewRequests().Unmarshal(&SysTags)
+	return SysTags
+}
+
 func GET_CATALOGUE(NovelID string) BoluobaoStructs.Catalogue {
 	var Catalogue BoluobaoStructs.Catalogue
 	request.Get(fmt.Sprintf("novels/%v/dirs", NovelID)).Add("expand", "originNeedFireMoney").NewRequests().
