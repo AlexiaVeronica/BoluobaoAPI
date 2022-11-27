@@ -2,14 +2,23 @@ package request
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
+	"os"
 )
 
 func (is *HttpUtils) GetEncodeParams() *bytes.Reader {
+	fmt.Println(is.query_data.Encode())
 	return bytes.NewReader([]byte(is.query_data.Encode()))
 }
-func (is *HttpUtils) GetResultBody() string {
+func (is *HttpUtils) GetResult() string {
 	return string(is.result_body)
+}
+
+func (is *HttpUtils) WriteResultString() {
+	if err := os.WriteFile("result.json", []byte(is.GetResult()), 0666); err != nil {
+		fmt.Println("Error: ", err)
+	}
 }
 
 func (is *HttpUtils) GetCookie() []*http.Cookie {
@@ -25,5 +34,12 @@ func (is *HttpUtils) GetUrl() string {
 
 func (is *HttpUtils) Add(key string, value string) *HttpUtils {
 	is.query_data.Add(key, value)
+	return is
+}
+
+func (is *HttpUtils) AddAll(params map[string]string) *HttpUtils {
+	for key, value := range params {
+		is.query_data.Add(key, value)
+	}
 	return is
 }

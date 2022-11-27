@@ -23,12 +23,16 @@ func NewHttpUtils(host string, path string, method string) *HttpUtils {
 }
 
 func (is *HttpUtils) NewRequests() *HttpUtils {
-	is.result_body = nil
-	if request, err := http.NewRequest(is.method, is.url, is.GetEncodeParams()); err != nil {
-		panic(err)
+	var err error
+	if is.method == "GET" {
+		is.response, err = http.NewRequest(is.method, is.url+"?"+is.query_data.Encode(), nil)
 	} else {
-		is.response = request
+		is.response, err = http.NewRequest(is.method, is.url, is.GetEncodeParams())
 	}
+	if err != nil {
+		panic(err)
+	}
+	is.result_body = nil
 	is.response.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	is.response.Header.Set("sf-minip-info", "minip_novel/1.0.70(android;11)/wxmp")
 	is.response.Header.Set("Cookie", is.Cookie)

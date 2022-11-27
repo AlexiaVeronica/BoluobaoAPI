@@ -10,8 +10,9 @@ import (
 
 func GET_BOOK_INFORMATION(NovelId string) BoluobaoStructs.BookInfo {
 	var BookInfo BoluobaoStructs.BookInfo
-	request.Get("novels/"+NovelId).Add("expand", "intro,tags,sysTags").NewRequests().
-		Unmarshal(&BookInfo)
+	expand := "chapterCount,bigBgBanner,bigNovelCover,typeName,intro,fav,ticket,pointCount,tags,sysTags,signlevel,discount,discountExpireDate,totalNeedFireMoney,rankinglist,originTotalNeedFireMoney,firstchapter,latestchapter,latestcommentdate,essaytag,auditCover,preOrderInfo,customTag,topic,unauditedCustomtag,homeFlag,isbranch"
+	res := request.Get("novels/"+NovelId).Add("expand", expand).NewRequests().Unmarshal(&BookInfo)
+	res.WriteResultString()
 	return BookInfo
 }
 
