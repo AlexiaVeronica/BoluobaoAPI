@@ -2,13 +2,11 @@ package request
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"os"
 )
 
 func (is *HttpUtils) GetEncodeParams() *bytes.Reader {
-	fmt.Println(is.query_data.Encode())
 	return bytes.NewReader([]byte(is.query_data.Encode()))
 }
 func (is *HttpUtils) GetResult() string {
@@ -16,9 +14,7 @@ func (is *HttpUtils) GetResult() string {
 }
 
 func (is *HttpUtils) WriteResultString() {
-	if err := os.WriteFile("result.json", []byte(is.GetResult()), 0666); err != nil {
-		fmt.Println("Error: ", err)
-	}
+	_ = os.WriteFile("result.json", []byte(is.GetResult()), 0666)
 }
 
 func (is *HttpUtils) GetCookie() []*http.Cookie {
