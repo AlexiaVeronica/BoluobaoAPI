@@ -37,6 +37,8 @@ var BookInfo BoluobaoStructs.BookInfo
 
 func main() {
 	book_id := "551946"
+	request.APP_TYPE.App = "wx"
+	request.APP_TYPE.Host = "https://minipapi.sfacg.com/pas/mpapi/"
 	BookInfo = boluobao.GET_BOOK_INFORMATION(book_id)
 	if BookInfo.Status.HTTPCode == 200 {
 		fmt.Println("bookName:", BookInfo.Data.NovelName)

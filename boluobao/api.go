@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/BoluobaoStructs"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
-	"os"
 	"strconv"
 )
 
@@ -80,7 +79,6 @@ func GET_SEARCH(keyword string, page int) BoluobaoStructs.Search {
 	request.Get("search/novels/result").Add("q", keyword).
 		Add("size", "20").Add("page", strconv.Itoa(page)).NewRequests().Unmarshal(&Search)
 	return Search
-
 }
 
 func LOGIN_ACCOUNT(username, password string) string {
@@ -95,7 +93,6 @@ func LOGIN_ACCOUNT(username, password string) string {
 	} else {
 		if message := BoluobaoStructs.Login.Status.Msg.(string); message == "用户名密码不匹配" {
 			fmt.Println(message)
-			os.Exit(0)
 		} else {
 			fmt.Println("login failed! error:", message)
 		}
