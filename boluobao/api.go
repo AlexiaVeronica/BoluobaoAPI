@@ -11,8 +11,7 @@ import (
 func GET_BOOK_INFORMATION(NovelId string) BoluobaoStructs.BookInfo {
 	var BookInfo BoluobaoStructs.BookInfo
 	expand := "chapterCount,bigBgBanner,bigNovelCover,typeName,intro,fav,ticket,pointCount,tags,sysTags,signlevel,discount,discountExpireDate,totalNeedFireMoney,rankinglist,originTotalNeedFireMoney,firstchapter,latestchapter,latestcommentdate,essaytag,auditCover,preOrderInfo,customTag,topic,unauditedCustomtag,homeFlag,isbranch"
-	res := request.Get("novels/"+NovelId).Add("expand", expand).NewRequests().Unmarshal(&BookInfo)
-	res.WriteResultString()
+	request.Get("novels/"+NovelId).Add("expand", expand).NewRequests().Unmarshal(&BookInfo)
 	return BookInfo
 }
 
@@ -26,6 +25,12 @@ func GET_BOOK_SHELF_INFORMATION() BoluobaoStructs.InfoData {
 	var bookshelfData BoluobaoStructs.InfoData
 	request.Get("user/Pockets").Add("expand", "novels").NewRequests().Unmarshal(&bookshelfData)
 	return bookshelfData
+}
+
+func GET_SPECIALPUSH() BoluobaoStructs.Specialpush {
+	var Specialpush BoluobaoStructs.Specialpush
+	request.Get("specialpush").Add("expand", "novels").NewRequests().Unmarshal(&Specialpush)
+	return Specialpush
 }
 
 func GET_CATALOGUE(NovelID string) BoluobaoStructs.Catalogue {
