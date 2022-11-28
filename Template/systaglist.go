@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 type SysTags struct {
 	Status status `json:"status"`

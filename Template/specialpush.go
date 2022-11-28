@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 type Specialpush struct {
 	Status status `json:"status"`

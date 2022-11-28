@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 type Account struct {
 	Status status `json:"status"`

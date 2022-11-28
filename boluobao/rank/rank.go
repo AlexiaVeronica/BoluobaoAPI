@@ -2,7 +2,7 @@ package rank
 
 import (
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/BoluobaoStructs"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
 	"strconv"
 )
@@ -23,8 +23,8 @@ func (r *Rank) rank_api() string {
 		return "ranks/week/novels"
 	}
 }
-func (r *Rank) GET_SFACG_RANKS() BoluobaoStructs.Rank {
-	var RankStruct BoluobaoStructs.Rank
+func (r *Rank) GET_SFACG_RANKS() Template.Rank {
+	var RankStruct Template.Rank
 	params := map[string]string{"size": "50", "rtype": "view", "ntype": "origin", "expand": "typeName,tags,sysTags,ticket,latestchapter"}
 	if r.RtypeIndex >= 6 {
 		fmt.Println("RtypeIndex must be less than 6")

@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/BoluobaoStructs"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
 	"os"
@@ -35,7 +35,7 @@ func GetChapter(book_id string) {
 	}
 }
 
-var BookInfo BoluobaoStructs.BookInfo
+var BookInfo Template.BookInfo
 
 func TestDownload(t *testing.T) {
 	book_id := "551946"

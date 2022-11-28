@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 type status struct {
 	HTTPCode  int         `json:"httpCode"`

@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 var Login = struct {
 	Status status `json:"status"`

@@ -7,7 +7,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/BoluobaoStructs"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
 	"os"

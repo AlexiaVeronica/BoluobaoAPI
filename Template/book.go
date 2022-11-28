@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 type BookInfoData struct {
 	AuthorID       int     `json:"authorId"`

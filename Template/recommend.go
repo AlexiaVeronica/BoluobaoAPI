@@ -1,4 +1,4 @@
-package BoluobaoStructs
+package Template
 
 type FXrecommend struct {
 	Status status `json:"status"`
