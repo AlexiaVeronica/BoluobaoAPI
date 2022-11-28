@@ -82,20 +82,16 @@ func GET_SEARCH(keyword string, page int) BoluobaoStructs.Search {
 }
 
 func LOGIN_ACCOUNT(username, password string) string {
-	CookieJar := request.Post("sessions").Add("username", username).
-		Add("password", password).NewRequests().Unmarshal(&BoluobaoStructs.Login).GetCookie()
-	for _, cookie := range CookieJar {
-		BoluobaoStructs.Login.Cookie += cookie.Name + "=" + cookie.Value + ";"
-	}
-
+	var Cookie string
+	params := map[string]string{"username": username, "password": password}
+	CookieJar := request.Post("sessions").AddAll(params).NewRequests().Unmarshal(&BoluobaoStructs.Login).GetCookie()
 	if BoluobaoStructs.Login.Status.HTTPCode == 200 {
-		return BoluobaoStructs.Login.Cookie
-	} else {
-		if message := BoluobaoStructs.Login.Status.Msg.(string); message == "用户名密码不匹配" {
-			fmt.Println(message)
-		} else {
-			fmt.Println("login failed! error:", message)
+		for _, cookie := range CookieJar {
+			Cookie += cookie.Name + "=" + cookie.Value + ";"
 		}
+		return Cookie
+	} else {
+		fmt.Println("login failed! error:", BoluobaoStructs.Login.Status.Msg)
+		return ""
 	}
-	return ""
 }
