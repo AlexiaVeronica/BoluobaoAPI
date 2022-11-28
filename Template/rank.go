@@ -1,13 +1,8 @@
 package Template
 
 type Rank struct {
-	Status struct {
-		HTTPCode  int         `json:"httpCode"`
-		ErrorCode int         `json:"errorCode"`
-		MsgType   int         `json:"msgType"`
-		Msg       interface{} `json:"msg"`
-	} `json:"status"`
-	Data []struct {
+	Status status `json:"status"`
+	Data   []struct {
 		AuthorID       int     `json:"authorId"`
 		LastUpdateTime string  `json:"lastUpdateTime"`
 		MarkCount      int     `json:"markCount"`
@@ -27,16 +22,18 @@ type Rank struct {
 		SignStatus     string  `json:"signStatus"`
 		CategoryID     int     `json:"categoryId"`
 		Expand         struct {
-			TypeName      string        `json:"typeName"`
-			Tags          []interface{} `json:"tags"`
-			Ticket        int           `json:"ticket"`
+			TypeName string        `json:"typeName"`
+			Tags     []interface{} `json:"tags"`
+			SysTags  []struct {
+				SysTagID int    `json:"sysTagId"`
+				TagName  string `json:"tagName"`
+			} `json:"sysTags"`
+			Ticket        int `json:"ticket"`
 			LatestChapter struct {
 				Title   string `json:"title"`
 				ChapID  int    `json:"chapId"`
 				AddTime string `json:"addTime"`
 			} `json:"latestChapter"`
-			Bonus    int     `json:"bonus"`
-			Discount float64 `json:"discount"`
 		} `json:"expand"`
 	} `json:"data"`
 }
