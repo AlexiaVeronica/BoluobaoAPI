@@ -2,7 +2,7 @@ package recommend
 
 import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 )
 
 func GET_SPECIALPUSH() Template.Specialpush {

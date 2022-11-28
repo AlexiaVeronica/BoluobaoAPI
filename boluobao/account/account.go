@@ -3,7 +3,7 @@ package account
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 )
 
 func GET_ACCOUNT_INFORMATION() Template.Account {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"os"
 	"strconv"
 	"testing"
