@@ -16,10 +16,10 @@ type Task struct {
 func (task *Task) GET_SIGN_INFO() {
 	var SignIn Template.SignIn
 	// "user/signInfo" is old api, now it's "user/newSignInfo"
-	today := time.Now().Format("2006-01-02")
-	request.Put("user/newSignInfo").Add("signDate", today).NewRequests().Unmarshal(&SignIn)
+	Data := fmt.Sprintf(`{'signDate': '%v'}`, task.GetDay())
+	request.Put("user/newSignInfo").AddString(Data).NewRequests().Unmarshal(&SignIn)
 	if SignIn.Status.HTTPCode == 200 {
-		fmt.Println("sign in success, date: ", today)
+		fmt.Println("sign in success, date: ", task.GetDay())
 	} else {
 		fmt.Println("签到失败,MESSAGE:", SignIn.Status.Msg)
 	}
@@ -49,9 +49,7 @@ func (task *Task) RECEIVE_TASK() {
 			Status Template.Status `json:"status"`
 		}{}
 		request.Post("user/tasks/" + strconv.Itoa(data.TaskId)).AddAll(map[string]string{
-			"seconds":     "3605",
-			"readingDate": time.Now().Format("2006-01-02"),
-			"entityType":  "3",
+			"seconds": "3605", "readingDate": task.GetDay(), "entityType": "3",
 		}).NewRequests().Unmarshal(&TaskInfo)
 		if TaskInfo.Status.ErrorCode == 200 {
 			fmt.Println(data.Name, "领取成功")
@@ -65,13 +63,13 @@ func (task *Task) RECEIVE_TASK() {
 func (task *Task) COMPLETE_TASK_LIST() {
 	for i, url := range []string{"user/tasks/4", "user/tasks/5", "user/tasks/17"} {
 		fmt.Println("正在完成第", i+1, "个任务")
-		request.Put(url).AddString(task.ReadData()).NewRequests()
+		request.Put(url).AddString(task.ListenData()).NewRequests()
 	}
 
 }
 
 func (task *Task) PUT_LISTEN_TIME() {
-	request.Put("user/readingtime").AddString(task.ReadData()).NewRequests()
+	request.Put("user/readingtime").AddString(task.ListenData()).NewRequests()
 }
 
 func (task *Task) PUT_READING_TIME() {
@@ -79,8 +77,12 @@ func (task *Task) PUT_READING_TIME() {
 }
 
 func (task *Task) ReadingDate() string {
-	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 2}`, time.Now().Format("2006-01-02"))
+	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 2}`, task.GetDay())
 }
-func (task *Task) ReadData() string {
-	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 3}`, time.Now().Format("2006-01-02"))
+func (task *Task) ListenData() string {
+	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 3}`, task.GetDay())
+}
+
+func (task *Task) GetDay() string {
+	return time.Now().Format("2006-01-02")
 }
