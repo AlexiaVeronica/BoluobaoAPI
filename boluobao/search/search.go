@@ -8,28 +8,31 @@ import (
 	"sync"
 )
 
-func GET_SEARCH(keyword string, page int) Template.Search {
+func GET_SEARCH(keyword string, page int) *Template.Search {
 	var Search Template.Search
-	request.Get("search/novels/result").Add("q", keyword).
-		Add("size", "20").Add("page", strconv.Itoa(page)).NewRequests().Unmarshal(&Search)
-	return Search
+	params := map[string]string{"q": keyword, "page": strconv.Itoa(page), "size": "50"}
+	request.Get("search/novels/result").AddAll(params).NewRequests().Unmarshal(&Search)
+	if Search.Status.HTTPCode == 200 {
+		return &Search
+	} else {
+		fmt.Println("search failed:", Search.Status.Msg)
+	}
+	return nil
 }
 
-func GET_SEARCH_All(keyword string) []Template.Search {
-	var SearchList []Template.Search
-	var wg = sync.WaitGroup{}
+func GET_SEARCH_All(keyword string) []*Template.Search {
+	var (
+		List []*Template.Search
+		wg   sync.WaitGroup
+	)
 	for i := 0; i < 30; i++ {
 		wg.Add(1)
 		go func(page int) {
 			defer wg.Done()
 			response := GET_SEARCH(keyword, page)
-			if response.Status.HTTPCode == 200 {
-				SearchList = append(SearchList, response)
-			} else {
-				fmt.Println("search failed:", response.Status.Msg)
-			}
+			List = append(List, response)
 		}(i)
 	}
 	wg.Wait() // wait for all goroutines to finish
-	return SearchList
+	return List
 }
