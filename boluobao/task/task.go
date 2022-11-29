@@ -2,6 +2,7 @@ package task
 
 import (
 	"fmt"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"github.com/google/uuid"
 	"time"
@@ -10,33 +11,28 @@ import (
 type Task struct{}
 
 func (task *Task) GET_SIGN_INFO() {
-	var Sign = struct {
-		Status struct {
-			HTTPCode  int         `json:"httpCode"`
-			ErrorCode int         `json:"errorCode"`
-			MsgType   int         `json:"msgType"`
-			Msg       interface{} `json:"msg"`
-		} `json:"status"`
-		Data []interface{} `json:"data"`
-	}{}
-	request.Get("user/signInfo").NewRequests().Unmarshal(&Sign)
-	if Sign.Status.HTTPCode == 200 {
-		fmt.Println("签到成功")
+	var SignIn = Template.SignIn{}
+	// "user/signInfo" is old api, now it's "user/newSignInfo"
+	today := time.Now().Format("2006-01-02")
+	request.Get("user/newSignInfo").AddAll(map[string]string{"signDate": today}).NewRequests().Unmarshal(&SignIn)
+	if SignIn.Status.HTTPCode == 200 {
+		fmt.Println("sign in success, date: ", today)
 	} else {
-		fmt.Println("签到失败", Sign.Status.Msg)
+		fmt.Println("签到失败", SignIn.Status.Msg)
 	}
 
 }
 
-func (task *Task) GET_TASKS_LIST() {
-	params := map[string]string{
+func (task *Task) GET_TASKS_LIST() Template.Task {
+	var TaskStruct = Template.Task{}
+	request.Get("user/tasks").AddAll(map[string]string{
 		"taskCategory": "1",
 		"package":      "com.sfacg",
 		"deviceToken":  uuid.New().String(),
 		"page":         "0",
 		"size":         "20",
-	}
-	request.Get("user/tasks").AddAll(params).NewRequests().WriteResultString()
+	}).NewRequests().Unmarshal(&TaskStruct).WriteResultString()
+	return TaskStruct
 }
 
 func (task *Task) POST_TASK_LIST() {

@@ -26,3 +26,11 @@ type Task struct {
 		Exp       int           `json:"exp"`
 	} `json:"data"`
 }
+type SignIn struct {
+	Status Status `json:"status"`
+	Data   []struct {
+		Num   int    `json:"num"`
+		Image string `json:"image"`
+		Name  string `json:"name"`
+	} `json:"data"`
+}
