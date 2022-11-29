@@ -41,3 +41,11 @@ func (task *Task) GET_TASKS_LIST() Template.Task {
 	}).NewRequests().Unmarshal(&TaskStruct)
 	return TaskStruct
 }
+
+func (task *Task) PUT_SHARE(account_id string) {
+	App := request.AppRequest{App: false}
+	App.SetApiHost()
+	fmt.Println(request.Put("user/tasks?taskId=4&userId=" + account_id).AddString(`{"env": 0}`).NewRequests().GetResult())
+	App.App = true
+	App.SetApiHost()
+}

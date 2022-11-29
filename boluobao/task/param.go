@@ -8,7 +8,9 @@ import (
 
 var ReadTaskList = []string{"user/tasks/4", "user/tasks/5", "user/tasks/17"}
 
-type Task struct{}
+type Task struct {
+	AccountId string
+}
 
 type MessageTask struct {
 	Status Template.Status `json:"status"`

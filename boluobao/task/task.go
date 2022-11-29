@@ -44,8 +44,12 @@ func (task *Task) RECEIVE_TASK_ALL(TaskList Template.Task) {
 func (task *Task) COMPLETE_TASK_LIST() {
 	for i, url := range ReadTaskList {
 		fmt.Println("complete task No:", i+1)
-		task.PUT_LISTEN_TIME()
-		task.PUT_READING_TIME()
+		if url == "user/tasks/4" && task.AccountId != "" {
+			task.PUT_SHARE(task.AccountId)
+		} else {
+			task.PUT_LISTEN_TIME()
+			task.PUT_READING_TIME()
+		}
 		request.Put(url).AddString(task.ListenData()).NewRequests()
 	}
 
