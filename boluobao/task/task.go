@@ -35,18 +35,31 @@ func (task *Task) GET_TASKS_LIST() {
 		"page":         "0",
 		"size":         "20",
 	}).NewRequests().Unmarshal(&TaskStruct).WriteResultString()
-	task.TaskList = TaskStruct
+	if TaskStruct.Status.HTTPCode == 200 {
+		task.TaskList = TaskStruct
+	} else {
+		fmt.Println("获取任务列表失败,MESSAGE:", TaskStruct.Status.Msg)
+	}
 }
 
 func (task *Task) RECEIVE_TASK() {
 	task.GET_TASKS_LIST() // init task list
 	for _, data := range task.TaskList.Data {
-		fmt.Println("任务名称:", data.Name, "尝试领取")
+		var TaskInfo = struct {
+			Status Template.Status `json:"status"`
+		}{}
 		request.Post("user/tasks/" + strconv.Itoa(data.TaskId)).AddAll(map[string]string{
 			"seconds":     "3605",
 			"readingDate": time.Now().Format("2006-01-02"),
 			"entityType":  "3",
-		}).NewRequests()
+		}).NewRequests().Unmarshal(&TaskInfo)
+		if TaskInfo.Status.ErrorCode == 200 {
+			fmt.Println(data.Name, "领取成功")
+		} else if TaskInfo.Status.ErrorCode == 798 {
+			fmt.Println(data.Name, "已经领取过了")
+		} else {
+			fmt.Println(data.Name, "message:", TaskInfo.Status.Msg)
+		}
 	}
 }
 func (task *Task) COMPLETE_TASK_LIST() {
