@@ -43,6 +43,7 @@ func (task *Task) GET_TASKS_LIST() Template.Task {
 }
 
 func (task *Task) PUT_SHARE(account_id string) {
+	// This interaction logic is so bad, I will refactor it, but now I will leave it like this.
 	App := request.AppRequest{App: false}
 	App.SetApiHost()
 	fmt.Println(request.Put("user/tasks?taskId=4&userId=" + account_id).AddString(`{"env": 0}`).NewRequests().GetResult())
