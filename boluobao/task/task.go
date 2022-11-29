@@ -2,23 +2,43 @@ package task
 
 import (
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/google/uuid"
 	"time"
 )
 
 type Task struct{}
 
 func (task *Task) GET_SIGN_INFO() {
-	var Status Template.Status
-	request.Get("user/signInfo").NewRequests().Unmarshal(&Status)
-	if Status.HTTPCode == 200 {
+	var Sign = struct {
+		Status struct {
+			HTTPCode  int         `json:"httpCode"`
+			ErrorCode int         `json:"errorCode"`
+			MsgType   int         `json:"msgType"`
+			Msg       interface{} `json:"msg"`
+		} `json:"status"`
+		Data []interface{} `json:"data"`
+	}{}
+	request.Get("user/signInfo").NewRequests().Unmarshal(&Sign)
+	if Sign.Status.HTTPCode == 200 {
 		fmt.Println("签到成功")
 	} else {
-		fmt.Println("签到失败", Status.Msg)
+		fmt.Println("签到失败", Sign.Status.Msg)
 	}
 
 }
+
+func (task *Task) GET_TASKS_LIST() {
+	params := map[string]string{
+		"taskCategory": "1",
+		"package":      "com.sfacg",
+		"deviceToken":  uuid.New().String(),
+		"page":         "0",
+		"size":         "20",
+	}
+	request.Get("user/tasks").AddAll(params).NewRequests().WriteResultString()
+}
+
 func (task *Task) POST_TASK_LIST() {
 	ListenData := map[string]string{
 		"seconds":     "3605",
