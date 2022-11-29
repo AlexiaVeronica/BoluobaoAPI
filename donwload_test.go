@@ -7,6 +7,7 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"os"
 	"strconv"
+	"testing"
 )
 
 func GetContent(ChapID string) {
@@ -39,7 +40,7 @@ func GetChapter(book_id string) {
 
 var BookInfo Template.BookInfo
 
-func main() {
+func TestDownload(t *testing.T) {
 	book_id := "551946"
 	App := request.AppRequest{App: false}
 	App.SetApiHost()
