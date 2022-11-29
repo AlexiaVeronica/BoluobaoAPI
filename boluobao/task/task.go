@@ -63,26 +63,24 @@ func (task *Task) RECEIVE_TASK() {
 	}
 }
 func (task *Task) COMPLETE_TASK_LIST() {
-	ListenData := map[string]string{
-		"seconds":     "3605",
-		"readingDate": time.Now().Format("2006-01-02"),
-		"entityType":  "3",
+	for i, url := range []string{"user/tasks/4", "user/tasks/5", "user/tasks/17"} {
+		fmt.Println("正在完成第", i+1, "个任务")
+		request.Put(url).AddString(task.ReadData()).NewRequests()
 	}
-	request.Put("user/tasks/4").AddAll(ListenData).NewRequests().WriteResultString()
-	request.Put("user/tasks/5").AddAll(ListenData).NewRequests().WriteResultString()
-	request.Put("user/tasks/17").AddAll(ListenData).NewRequests().WriteResultString()
+
 }
 
 func (task *Task) PUT_LISTEN_TIME() {
-	ListenData := map[string]string{
-		"seconds":     "3605",
-		"readingDate": time.Now().Format("2006-01-02"),
-		"entityType":  "3",
-	}
-	request.Put("user/readingtime").AddAll(ListenData).NewRequests().WriteResultString()
+	request.Put("user/readingtime").AddString(task.ReadData()).NewRequests()
 }
 
 func (task *Task) PUT_READING_TIME() {
-	ReadData := fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 2}`, time.Now().Format("2006-01-02"))
-	request.Put("user/readingtime").AddString(ReadData).NewRequests().WriteResultString()
+	request.Put("user/readingtime").AddString(task.ReadingDate()).NewRequests().WriteResultString()
+}
+
+func (task *Task) ReadingDate() string {
+	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 2}`, time.Now().Format("2006-01-02"))
+}
+func (task *Task) ReadData() string {
+	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 3}`, time.Now().Format("2006-01-02"))
 }
