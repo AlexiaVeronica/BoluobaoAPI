@@ -9,13 +9,14 @@ import (
 )
 
 type HttpUtils struct {
-	url         string
-	method      string
-	Cookie      string
-	cookie      []*http.Cookie
-	response    *http.Request
-	query_data  *url.Values
-	result_body []byte
+	url            string
+	method         string
+	Cookie         string
+	cookie         []*http.Cookie
+	response       *http.Request
+	query_data     *url.Values
+	DataFormString string
+	result_body    []byte
 }
 
 func NewHttpUtils(host string, path string, method string) *HttpUtils {
@@ -31,8 +32,12 @@ func (is *HttpUtils) NewRequests() *HttpUtils {
 	var err error
 	if is.method == "GET" {
 		is.response, err = http.NewRequest(is.method, is.url+"?"+is.query_data.Encode(), nil)
-	} else {
+	} else if is.method == "POST" {
 		is.response, err = http.NewRequest(is.method, is.url, is.GetEncodeParams())
+	} else if is.method == "PUT" {
+		is.response, err = http.NewRequest(is.method, is.url, is.PutData())
+	} else {
+		panic("method error" + is.method)
 	}
 	if err != nil {
 		panic(err)

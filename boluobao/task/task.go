@@ -70,10 +70,6 @@ func (task *Task) PUT_LISTEN_TIME() {
 }
 
 func (task *Task) PUT_READING_TIME() {
-	ReadData := map[string]string{
-		"seconds":     "3605",
-		"readingDate": time.Now().Format("2006-01-02"),
-		"entityType":  "2",
-	}
-	request.Put("user/readingtime").AddAll(ReadData).NewRequests().WriteResultString()
+	ReadData := fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 2}`, time.Now().Format("2006-01-02"))
+	request.Put("user/readingtime").AddString(ReadData).NewRequests().WriteResultString()
 }
