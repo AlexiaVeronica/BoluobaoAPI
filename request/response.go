@@ -2,22 +2,25 @@ package request
 
 type AppRequest struct{ App bool }
 
-var api_host string
+var ApiHost string
 
-func (a *AppRequest) SetApiHost() {
+var Cookie string
+
+func (a *AppRequest) SetApiHost() string {
 	if a.App {
-		api_host = "https://api.sfacg.com/"
+		ApiHost = "https://api.sfacg.com/"
 	} else {
-		api_host = "https://minipapi.sfacg.com/pas/mpapi/"
+		ApiHost = "https://minipapi.sfacg.com/pas/mpapi/"
 	}
+	return ApiHost
 }
 
 func Get(path string) *HttpUtils {
-	return NewHttpUtils(api_host, path, "GET")
+	return NewHttpUtils(ApiHost, path, "GET")
 }
 func Post(path string) *HttpUtils {
-	return NewHttpUtils(api_host, path, "POST")
+	return NewHttpUtils(ApiHost, path, "POST")
 }
 func Put(path string) *HttpUtils {
-	return NewHttpUtils(api_host, path, "PUT")
+	return NewHttpUtils(ApiHost, path, "PUT")
 }

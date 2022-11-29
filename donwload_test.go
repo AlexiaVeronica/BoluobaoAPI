@@ -12,6 +12,7 @@ import (
 
 func GetContent(ChapID string) {
 	contents := boluobao.GET_CHAPTER_CONTENT(ChapID)
+	//fmt.Println(contents)
 	if contents.Status.HTTPCode == 200 {
 		content_text := []byte("\n\n\n" + contents.Data.Title + "\n\n" + contents.Data.Expand.Content)
 		path := fmt.Sprintf("%v.txt", BookInfo.Data.NovelName)
@@ -23,6 +24,8 @@ func GetContent(ChapID string) {
 		if _, err = fl.Write(content_text); err != nil {
 			fmt.Println("Error:", err)
 		}
+	} else {
+		fmt.Println("Content Error:", contents.Status.Msg)
 	}
 }
 func GetChapter(book_id string) {

@@ -1,7 +1,7 @@
 package Template
 
 type Catalogue struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   Data   `json:"data"`
 }
 type ChapterList struct {

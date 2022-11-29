@@ -1,7 +1,7 @@
 package Template
 
 type Search struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   struct {
 		Novels []BookInfoData `json:"novels"`
 	} `json:"data"`

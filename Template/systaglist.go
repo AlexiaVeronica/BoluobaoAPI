@@ -1,7 +1,7 @@
 package Template
 
 type SysTags struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   []struct {
 		SysTagID    int    `json:"sysTagId"`
 		RefferTimes int    `json:"refferTimes"`

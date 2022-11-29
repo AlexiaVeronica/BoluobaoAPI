@@ -1,7 +1,7 @@
 package Template
 
 var Login = struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Cookie string
 	Data   interface{} `json:"data"`
 }{}

@@ -19,7 +19,12 @@ type HttpUtils struct {
 }
 
 func NewHttpUtils(host string, path string, method string) *HttpUtils {
-	return &HttpUtils{method: method, query_data: &url.Values{}, url: host + path}
+	return &HttpUtils{
+		method:     method,
+		query_data: &url.Values{},
+		url:        host + path,
+		Cookie:     Cookie,
+	}
 }
 
 func (is *HttpUtils) NewRequests() *HttpUtils {

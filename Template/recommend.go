@@ -1,7 +1,7 @@
 package Template
 
 type FXrecommend struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   struct {
 		HotPush []struct {
 			Novel struct {
@@ -43,7 +43,7 @@ type FXrecommend struct {
 	} `json:"data"`
 }
 type NewBookRecommend struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   struct {
 		NewPush []struct {
 			Novel struct {
@@ -85,7 +85,7 @@ type NewBookRecommend struct {
 	} `json:"data"`
 }
 type Actpush struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   []struct {
 		ImgURL  string `json:"imgUrl"`
 		Link    string `json:"link"`

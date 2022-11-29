@@ -1,7 +1,7 @@
 package Template
 
 type Specialpush struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   struct {
 		NovelSpecialSubject string `json:"novelSpecialSubject"`
 		HomePush            []struct {

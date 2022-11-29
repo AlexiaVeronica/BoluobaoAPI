@@ -1,7 +1,7 @@
 package Template
 
 type Rank struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   []struct {
 		AuthorID       int     `json:"authorId"`
 		LastUpdateTime string  `json:"lastUpdateTime"`

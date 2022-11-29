@@ -1,14 +1,22 @@
 package task
 
 import (
+	"fmt"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"time"
 )
 
 type Task struct{}
 
-func (task *Task) GET_TASK() {
-	request.Get("user/signInfo").NewRequests().WriteResultString()
+func (task *Task) GET_SIGN_INFO() {
+	var Status Template.Status
+	request.Get("user/signInfo").NewRequests().Unmarshal(&Status)
+	if Status.HTTPCode == 200 {
+		fmt.Println("签到成功")
+	} else {
+		fmt.Println("签到失败", Status.Msg)
+	}
 
 }
 func (task *Task) POST_TASK_LIST() {

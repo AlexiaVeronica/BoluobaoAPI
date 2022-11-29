@@ -1,7 +1,7 @@
 package Template
 
 type InfoData struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   []struct {
 		AccountID  int    `json:"accountId"`
 		PocketID   int    `json:"pocketId"`

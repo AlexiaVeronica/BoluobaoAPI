@@ -1,7 +1,7 @@
 package Template
 
 type Task struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   []struct {
 		RecordId    int    `json:"recordId"`
 		TaskId      int    `json:"taskId"`

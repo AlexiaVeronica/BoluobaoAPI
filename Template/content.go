@@ -1,7 +1,7 @@
 package Template
 
 type Content struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   struct {
 		ChapID     int    `json:"chapId"`
 		NovelID    int    `json:"novelId"`

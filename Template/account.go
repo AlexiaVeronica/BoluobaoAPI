@@ -1,7 +1,7 @@
 package Template
 
 type Account struct {
-	Status status `json:"status"`
+	Status Status `json:"status"`
 	Data   struct {
 		UserName     string `json:"userName"`
 		NickName     string `json:"nickName"`
