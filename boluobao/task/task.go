@@ -5,25 +5,29 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"github.com/google/uuid"
+	"strconv"
 	"time"
 )
 
-type Task struct{}
+type Task struct {
+	TaskList Template.Task
+}
 
 func (task *Task) GET_SIGN_INFO() {
-	var SignIn = Template.SignIn{}
+	var SignIn Template.SignIn
 	// "user/signInfo" is old api, now it's "user/newSignInfo"
 	today := time.Now().Format("2006-01-02")
-	request.Get("user/newSignInfo").AddAll(map[string]string{"signDate": today}).NewRequests().Unmarshal(&SignIn)
+	request.Put("user/newSignInfo").AddAll(map[string]string{"signDate": today}).NewRequests().Unmarshal(&SignIn)
+	//fmt.Println(SignIn)
 	if SignIn.Status.HTTPCode == 200 {
 		fmt.Println("sign in success, date: ", today)
 	} else {
-		fmt.Println("签到失败", SignIn.Status.Msg)
+		fmt.Println("签到失败,MESSAGE:", SignIn.Status.Msg)
 	}
 
 }
 
-func (task *Task) GET_TASKS_LIST() Template.Task {
+func (task *Task) GET_TASKS_LIST() {
 	var TaskStruct = Template.Task{}
 	request.Get("user/tasks").AddAll(map[string]string{
 		"taskCategory": "1",
@@ -32,9 +36,19 @@ func (task *Task) GET_TASKS_LIST() Template.Task {
 		"page":         "0",
 		"size":         "20",
 	}).NewRequests().Unmarshal(&TaskStruct).WriteResultString()
-	return TaskStruct
+	task.TaskList = TaskStruct
 }
 
+func (task *Task) RECEIVE_TASK() {
+	for _, data := range task.TaskList.Data {
+		fmt.Println("任务名称:", data.Name, "尝试领取")
+		request.Post("user/tasks/" + strconv.Itoa(data.TaskId)).AddAll(map[string]string{
+			"seconds":     "3605",
+			"readingDate": time.Now().Format("2006-01-02"),
+			"entityType":  "3",
+		}).NewRequests()
+	}
+}
 func (task *Task) POST_TASK_LIST() {
 	ListenData := map[string]string{
 		"seconds":     "3605",
