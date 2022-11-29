@@ -5,8 +5,7 @@ import (
 	"time"
 )
 
-type Task struct {
-}
+type Task struct{}
 
 func (task *Task) GET_TASK() {
 	request.Get("user/signInfo").NewRequests().WriteResultString()
@@ -21,6 +20,17 @@ func (task *Task) POST_TASK_LIST() {
 	request.Post("user/tasks/4").AddAll(ListenData).NewRequests().WriteResultString()
 	request.Post("user/tasks/5").AddAll(ListenData).NewRequests().WriteResultString()
 	request.Post("user/tasks/17").AddAll(ListenData).NewRequests().WriteResultString()
+}
+
+func (task *Task) COMPLETE_TASK_LIST() {
+	ListenData := map[string]string{
+		"seconds":     "3605",
+		"readingDate": time.Now().Format("2006-01-02"),
+		"entityType":  "3",
+	}
+	request.Put("user/tasks/4").AddAll(ListenData).NewRequests().WriteResultString()
+	request.Put("user/tasks/5").AddAll(ListenData).NewRequests().WriteResultString()
+	request.Put("user/tasks/17").AddAll(ListenData).NewRequests().WriteResultString()
 }
 
 func (task *Task) PUT_LISTEN_TIME() {
