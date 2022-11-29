@@ -8,15 +8,15 @@ package main
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/book"
+	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"os"
 	"strconv"
-	"testing"
 )
 
 func GetContent(ChapID string) {
-	contents := boluobao.GET_CHAPTER_CONTENT(ChapID)
+	contents := book.GET_CHAPTER_CONTENT(ChapID)
+	//fmt.Println(contents)
 	if contents.Status.HTTPCode == 200 {
 		content_text := []byte("\n\n\n" + contents.Data.Title + "\n\n" + contents.Data.Expand.Content)
 		path := fmt.Sprintf("%v.txt", BookInfo.Data.NovelName)
@@ -28,10 +28,12 @@ func GetContent(ChapID string) {
 		if _, err = fl.Write(content_text); err != nil {
 			fmt.Println("Error:", err)
 		}
+	} else {
+		fmt.Println("Content Error:", contents.Status.Msg)
 	}
 }
 func GetChapter(book_id string) {
-	for _, v := range boluobao.GET_CATALOGUE(book_id).Data.VolumeList {
+	for _, v := range book.GET_CATALOGUE(book_id).Data.VolumeList {
 		fmt.Println("VolumeName:", v.Title)
 		for _, v2 := range v.ChapterList {
 			fmt.Println("	ChapterName:", v2.Title)
@@ -40,14 +42,13 @@ func GetChapter(book_id string) {
 	}
 }
 
-var BookInfo BoluobaoStructs.BookInfo
+var BookInfo Template.BookInfo
 
-func TestDownload(t *testing.T) {
+func main() {
 	book_id := "551946"
-	
 	App := request.AppRequest{App: false}
 	App.SetApiHost()
-	BookInfo = boluobao.GET_BOOK_INFORMATION(book_id)
+	BookInfo = book.GET_BOOK_INFORMATION(book_id)
 	if BookInfo.Status.HTTPCode == 200 {
 		fmt.Println("bookName:", BookInfo.Data.NovelName)
 		fmt.Println("AuthorName:", BookInfo.Data.AuthorName)
@@ -61,8 +62,9 @@ func TestDownload(t *testing.T) {
 		}
 		GetChapter(strconv.Itoa(BookInfo.Data.NovelID))
 	} else {
-		fmt.Println("Error:", BookInfo.Status.Msg)
+		fmt.Println("BookInfo Error:", BookInfo.Status.Msg)
 	}
 }
+
 
 ```
