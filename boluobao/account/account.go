@@ -12,6 +12,12 @@ func GET_ACCOUNT_INFORMATION() Template.Account {
 	return Account
 }
 
+func GET_ACCOUNT_MONEY_INFORMATION() Template.Account {
+	var Account Template.Account
+	request.Get("user/money").NewRequests().Unmarshal(&Account).WriteResultString()
+	return Account
+}
+
 func LOGIN_ACCOUNT(username, password string) string {
 	var Cookie string
 	params := map[string]string{"username": username, "password": password}
