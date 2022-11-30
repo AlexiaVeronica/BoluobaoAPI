@@ -19,8 +19,8 @@ func PrintTagList() {
 	}
 	fmt.Println(table)
 }
-func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.Tag {
-	var TagsList []Template.Tag
+func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
+	var TagsList []Template.BookInfoData
 	var wg *sync.WaitGroup
 	for i := 1; i <= last_page; i++ {
 		wg.Add(1)
@@ -28,7 +28,9 @@ func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.Tag {
 			defer wg.Done()
 			response := GET_TAG_INFO(TagID, page)
 			if response.Status.HTTPCode == 200 {
-				TagsList = append(TagsList, response)
+				for _, data := range response.Data {
+					TagsList = append(TagsList, data)
+				}
 			}
 		}(i)
 	}
