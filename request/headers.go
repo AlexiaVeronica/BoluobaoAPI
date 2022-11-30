@@ -37,7 +37,7 @@ func (is *HttpUtils) set_headers() {
 		Header["Authorization"] = "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE="
 
 	}
-	fmt.Println(Header)
+	//fmt.Println(Header)
 	for HeaderKey, HeaderValue := range Header {
 		is.response.Header.Set(HeaderKey, HeaderValue)
 
