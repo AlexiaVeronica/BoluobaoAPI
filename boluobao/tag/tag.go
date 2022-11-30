@@ -21,17 +21,20 @@ func PrintTagList() {
 }
 func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
 	var TagsList []Template.BookInfoData
-	var wg *sync.WaitGroup
+	var wg sync.WaitGroup
+	var ch = make(chan interface{}, 36)
 	for i := 1; i <= last_page; i++ {
 		wg.Add(1)
 		go func(page int) {
+			ch <- "ok"
 			defer wg.Done()
 			response := GET_TAG_INFO(TagID, page)
-			if response.Status.HTTPCode == 200 {
+			if response.Status.HTTPCode == 200 && response.Data != nil {
 				for _, data := range response.Data {
 					TagsList = append(TagsList, data)
 				}
 			}
+			<-ch
 		}(i)
 	}
 	wg.Wait()
