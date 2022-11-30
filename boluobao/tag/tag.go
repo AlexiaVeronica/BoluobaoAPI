@@ -1,42 +1,29 @@
 package tag
 
 import (
+	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
-	"strconv"
+	"sync"
 )
 
-func GET_SYS_TAG_LIST() Template.SysTags {
-	var SysTags Template.SysTags
-	request.Get("novels/0/sysTags").Add("filter", "push").NewRequests().Unmarshal(&SysTags)
-	return SysTags
-}
-
-func GET_TAG_INFO(TagID string, page int) Template.Tag {
-	params := map[string]string{
-		"systagids":      TagID,
-		"isfree":         "both",
-		"size":           "50",
-		"charcountbegin": "0",
-		"updatedays":     "-1",
-		"expand":         "typeName,sysTags,discount,discountExpireDate",
-		"sort":           "latest",
-		"page":           strconv.Itoa(page),
-		"charcountend":   "0",
-		"isfinish":       "both",
+func PrintTagList() {
+	for _, value := range GET_SYS_TAG_LIST().Data {
+		fmt.Println("tag_id:", value.SysTagID, "\t\ttag_name:", value.TagName)
 	}
-	var BookTags Template.Tag
-	request.Get("novels/0/sysTags/novels").AddAll(params).NewRequests().Unmarshal(&BookTags)
-	return BookTags
 }
-
 func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.Tag {
 	var TagsList []Template.Tag
+	var wg *sync.WaitGroup
 	for i := 1; i <= last_page; i++ {
-		response := GET_TAG_INFO(TagID, last_page)
-		if response.Status.HTTPCode == 200 {
-			TagsList = append(TagsList, response)
-		}
+		wg.Add(1)
+		go func(page int) {
+			defer wg.Done()
+			response := GET_TAG_INFO(TagID, page)
+			if response.Status.HTTPCode == 200 {
+				TagsList = append(TagsList, response)
+			}
+		}(i)
 	}
+	wg.Wait()
 	return TagsList
 }
