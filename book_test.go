@@ -3,20 +3,27 @@ package main
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/rank"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
-
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/tag"
+	"github.com/VeronicaAlexia/BoluobaoAPI/config"
 	"testing"
 )
 
 func TestBook(t *testing.T) {
-	App := request.AppRequest{App: false}
-	App.SetApiHost()
-	ranks := rank.Rank{RtypeIndex: 0, Page: 0}
-	for index, i2 := range ranks.GET_SFACG_RANKS().Data {
-		fmt.Println(index, ": ", i2.NovelName)
+	config.AppConfig.App = true
+	tag.PrintTagList()
+	RESULT := tag.GET_TAG_INFO_ALL("", 100)
+	fmt.Println(RESULT)
+	fmt.Println(len(RESULT))
+
+	var index int
+	//view, sale, newhit, mark, ticket, bonus
+	ranks := rank.Rank{RtypeIndex: 0, Page: 3}
+	for _, book_info := range ranks.GET_SFACG_RANKS().Data {
+		var SysTagsList []string
+		SysTags := book_info.Expand.SysTags
+		for _, value := range SysTags {
+			SysTagsList = append(SysTagsList, value.TagName)
+		}
+		fmt.Println("index:", index, book_info.NovelName)
 	}
 }
-
-//func TestCATALOGUE(t *testing.T) {
-//	fmt.Println(boluobao.GET_CATALOGUE("551946"))
-//}
