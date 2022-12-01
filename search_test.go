@@ -26,12 +26,8 @@ func TestSearchAll(t *testing.T) {
 		fmt.Println("没有搜索到结果,请检查关键词是否正确")
 	} else {
 		fmt.Println("搜索完成:", len(response_list), "页")
-		var index int
-		for _, response := range response_list {
-			for _, data := range response.Data.Novels {
-				index++
-				fmt.Println("index:", index, "\tbookID:", data.NovelID, "\tbookName:", data.NovelName)
-			}
+		for index, data := range response_list {
+			fmt.Println("index:", index, "\tbookID:", data.NovelID, "\tbookName:", data.NovelName)
 		}
 	}
 }
