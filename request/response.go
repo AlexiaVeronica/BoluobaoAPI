@@ -1,26 +1,23 @@
 package request
 
-type AppRequest struct{ App bool }
+import "github.com/VeronicaAlexia/BoluobaoAPI/config"
 
-var ApiHost string
-
-var Cookie string
-
-func (a *AppRequest) SetApiHost() string {
-	if a.App {
-		ApiHost = "https://api.sfacg.com/"
+func ApiHost() string {
+	var Host string
+	if config.AppConfig.App {
+		Host = "https://api.sfacg.com/"
 	} else {
-		ApiHost = "https://minipapi.sfacg.com/pas/mpapi/"
+		Host = "https://minipapi.sfacg.com/pas/mpapi/"
 	}
-	return ApiHost
+	return Host
 }
 
 func Get(path string) *HttpUtils {
-	return NewHttpUtils(ApiHost, path, "GET")
+	return NewHttpUtils(ApiHost(), path, "GET")
 }
 func Post(path string) *HttpUtils {
-	return NewHttpUtils(ApiHost, path, "POST")
+	return NewHttpUtils(ApiHost(), path, "POST")
 }
 func Put(path string) *HttpUtils {
-	return NewHttpUtils(ApiHost, path, "PUT")
+	return NewHttpUtils(ApiHost(), path, "PUT")
 }

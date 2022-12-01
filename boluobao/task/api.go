@@ -3,6 +3,7 @@ package task
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
+	"github.com/VeronicaAlexia/BoluobaoAPI/config"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"github.com/google/uuid"
 )
@@ -44,9 +45,17 @@ func (task *Task) GET_TASKS_LIST() Template.Task {
 
 func (task *Task) PUT_SHARE(account_id string) {
 	// This interaction logic is so bad, I will refactor it, but now I will leave it like this.
-	App := request.AppRequest{App: false}
-	App.SetApiHost()
-	fmt.Println(request.Put("user/tasks?taskId=4&userId=" + account_id).AddString(`{"env": 0}`).NewRequests().GetResult())
-	App.App = true
-	App.SetApiHost()
+	// I will refactor it when I have time.
+	var change bool
+	if config.AppConfig.App {
+		change = true
+		config.AppConfig.App = false
+	} else {
+		change = false
+	}
+	request.Put("user/tasks?taskId=4&userId=" + account_id).AddString(`{"env": 0}`).NewRequests()
+
+	if change {
+		config.AppConfig.App = true // change back to app
+	}
 }

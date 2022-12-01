@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/book"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/config"
 	"os"
 	"strconv"
 	"testing"
@@ -42,8 +42,7 @@ var BookInfo Template.BookInfo
 
 func TestDownload(t *testing.T) {
 	book_id := "551946"
-	App := request.AppRequest{App: false}
-	App.SetApiHost()
+	config.AppConfig.App = true
 	BookInfo = book.GET_BOOK_INFORMATION(book_id)
 	if BookInfo.Status.HTTPCode == 200 {
 		fmt.Println("bookName:", BookInfo.Data.NovelName)

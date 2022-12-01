@@ -20,12 +20,12 @@ func GET_SEARCH(keyword string, page int) *Template.Search {
 	return nil
 }
 
-func GET_SEARCH_All(keyword string) []Template.BookInfoData {
+func GET_SEARCH_All(keyword string, lastPage int) []Template.BookInfoData {
 	var (
 		BookInfoList []Template.BookInfoData
 		wg           sync.WaitGroup
 	)
-	for i := 0; i < 30; i++ {
+	for i := 0; i < lastPage; i++ {
 		wg.Add(1)
 		go func(page int) {
 			defer wg.Done()

@@ -14,7 +14,7 @@ type ChapterList struct {
 	RowNum              int         `json:"rowNum"`
 	ChapOrder           int         `json:"chapOrder"`
 	Title               string      `json:"title"`
-	Content             interface{} `json:"content"`
+	Content             interface{} `json:"content"` // null
 	Sno                 float64     `json:"sno"`
 	IsVip               bool        `json:"isVip"`
 	AddTime             string      `json:"AddTime"`
