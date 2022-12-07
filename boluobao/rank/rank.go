@@ -8,10 +8,27 @@ import (
 )
 
 type Rank struct {
-	RtypeIndex int //view, sale, newhit, mark, ticket, bonus
-	Month      bool
-	All        bool
-	Page       int
+	Rtype string //view, sale, newhit, mark, ticket, bonus
+	Month bool
+	All   bool
+	Page  int
+	Size  int
+}
+
+var TypeName = struct {
+	ViewRank   string
+	BestRank   string
+	NewRank    string
+	TicketRank string
+	MarkRank   string
+	BonusRank  string
+}{
+	ViewRank:   "view",
+	BestRank:   "sale",
+	NewRank:    "newhit",
+	TicketRank: "ticket",
+	MarkRank:   "mark",
+	BonusRank:  "bonus",
 }
 
 func (r *Rank) rank_api() string {
@@ -25,14 +42,19 @@ func (r *Rank) rank_api() string {
 }
 func (r *Rank) GET_SFACG_RANKS() Template.Rank {
 	var RankStruct Template.Rank
-	params := map[string]string{"size": "50", "ntype": "origin", "expand": "typeName,tags,sysTags,ticket,latestchapter"}
-	if r.RtypeIndex >= 6 {
-		fmt.Println("RtypeIndex must be less than 6")
-		r.RtypeIndex = 0
+	params := map[string]string{"ntype": "origin", "expand": "typeName,tags,sysTags,ticket,latestchapter"}
+
+	if r.Size == 0 {
+		fmt.Println("Size is 0, set to 50")
+		r.Size = 50
+	}
+	if r.Rtype == "sale" && r.Size > 40 {
+		r.Size = 40 // 限制畅销榜最大值为40
 	}
 	params["page"] = strconv.Itoa(r.Page)
-	params["rtype"] = map[int]string{0: "view", 1: "sale", 2: "newhit", 3: "mark", 4: "ticket", 5: "bonus"}[r.RtypeIndex]
-
+	params["rtype"] = r.Rtype
+	params["size"] = strconv.Itoa(r.Size)
+	fmt.Println(r.rank_api())
 	request.Get(r.rank_api()).AddAll(params).NewRequests().Unmarshal(&RankStruct)
 	return RankStruct
 }
