@@ -10,7 +10,7 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/book"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
-	"github.com/VeronicaAlexia/BoluobaoAPI/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"os"
 	"strconv"
 )

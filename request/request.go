@@ -3,7 +3,7 @@ package request
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"io"
 	"net/http"
 	"net/url"

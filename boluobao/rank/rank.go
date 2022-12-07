@@ -33,6 +33,6 @@ func (r *Rank) GET_SFACG_RANKS() Template.Rank {
 	params["page"] = strconv.Itoa(r.Page)
 	params["rtype"] = map[int]string{0: "view", 1: "sale", 2: "newhit", 3: "mark", 4: "ticket", 5: "bonus"}[r.RtypeIndex]
 
-	request.Get(r.rank_api()).AddAll(params).NewRequests().Unmarshal(&RankStruct).WriteResultString()
+	request.Get(r.rank_api()).AddAll(params).NewRequests().Unmarshal(&RankStruct)
 	return RankStruct
 }

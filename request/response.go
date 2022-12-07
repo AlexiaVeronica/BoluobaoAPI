@@ -1,6 +1,8 @@
 package request
 
-import "github.com/VeronicaAlexia/BoluobaoAPI/config"
+import (
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
+)
 
 func ApiHost() string {
 	var Host string

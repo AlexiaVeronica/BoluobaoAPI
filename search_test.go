@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/search"
-	"github.com/VeronicaAlexia/BoluobaoAPI/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"testing"
 )
 
@@ -24,7 +24,7 @@ func TestSearchAll(t *testing.T) {
 	} else {
 		fmt.Println("搜索完成:", len(response_list), "页")
 		for _, data := range response_list {
-			fmt.Println(data.LastUpdateTime)
+			fmt.Println(data.NovelName)
 			//fmt.Println("index:", index, "\tbookID:", data.NovelID, "\tbookName:", data.NovelName)
 		}
 	}

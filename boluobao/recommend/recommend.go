@@ -32,6 +32,6 @@ func (recommend *Recommend) GET_HOST_PUSH() Template.FXrecommend {
 func (recommend *Recommend) GET_NEW_BOOK_PUSH() Template.NewBookRecommend {
 	var NewBookRecommend Template.NewBookRecommend
 	params := map[string]string{"pushNames": "newpush", "page": "0", "size": "10", "expand": "sysTags,homeFlag"}
-	request.Get("novels/specialpushs").AddAll(params).NewRequests().Unmarshal(&NewBookRecommend).WriteResultString()
+	request.Get("novels/specialpushs").AddAll(params).NewRequests().Unmarshal(&NewBookRecommend)
 	return NewBookRecommend
 }

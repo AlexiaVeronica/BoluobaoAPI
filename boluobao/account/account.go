@@ -14,7 +14,7 @@ func GET_ACCOUNT_INFORMATION() Template.Account {
 
 func GET_ACCOUNT_MONEY_INFORMATION() Template.Account {
 	var Account Template.Account
-	request.Get("user/money").NewRequests().Unmarshal(&Account).WriteResultString()
+	request.Get("user/money").NewRequests().Unmarshal(&Account)
 	return Account
 }
 

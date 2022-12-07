@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/account"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/task"
-	"github.com/VeronicaAlexia/BoluobaoAPI/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"strconv"
 	"testing"
 )
