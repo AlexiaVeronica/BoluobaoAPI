@@ -7,7 +7,7 @@ import (
 
 func GET_TAG_INFO(TagID string, page int) Template.Tag {
 	var BookTags Template.Tag
-	request.Get("novels/0/sysTags/novels").AddAll(TagsParams(TagID, page)).NewRequests().Unmarshal(&BookTags)
+	request.Get("novels/0/sysTags/novels").AddAll(TagsParams(TagID, page, "50")).NewRequests().Unmarshal(&BookTags)
 	return BookTags
 }
 

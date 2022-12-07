@@ -11,11 +11,13 @@ import (
 )
 
 func WeChatBasic() string {
-	signString := "d3htaW5pYXBw" + strconv.FormatInt(time.Now().UnixNano()/1000000, 10) + "null" + "xw3#a12-x"
+	timestamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
+	signString := "d3htaW5pYXBw" + timestamp + "null" + "xw3#a12-x"
 	signMd5 := md5.New()
 	signMd5.Write([]byte(signString))
+	sign := strings.ToUpper(hex.EncodeToString(signMd5.Sum(nil)))
 	Authorization := fmt.Sprintf("wxmpuser:194c5#b_47Fc75676f:nonce=%v&deviceToken=null&timestamp=%v&sign=%v",
-		"d3htaW5pYXBw", strconv.FormatInt(time.Now().UnixNano()/1000000, 10), strings.ToUpper(hex.EncodeToString(signMd5.Sum(nil))))
+		"d3htaW5pYXBw", timestamp, sign)
 	return base64.StdEncoding.EncodeToString([]byte(Authorization))
 }
 
