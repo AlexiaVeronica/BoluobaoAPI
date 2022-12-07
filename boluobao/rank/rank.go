@@ -43,11 +43,18 @@ func (r *Rank) GET_SFACG_RANKS() Template.Rank {
 	var RankStruct Template.Rank
 	params := map[string]string{"ntype": "origin", "expand": "typeName,tags,sysTags,ticket,latestchapter"}
 	if r.Size == 0 {
-		r.Size = 50
+		r.Size = 50 //默认50
 	}
-	if r.TypeName == "sale" && r.Size > 40 {
-		r.Size = 40 // 畅销榜最大值为40
-		r.Page = 0  // 畅销榜只有一页
+	if r.TypeName == "sale" {
+		if r.Size > 40 {
+			r.Size = 40 // 畅销榜最大值为40
+		}
+		if r.Page > 0 {
+			r.Page = 0 // 畅销榜只有一页
+		}
+		if r.All {
+			r.All = false // 畅销榜只有周榜, 月榜
+		}
 	}
 	if r.TypeName == "newhit" || r.TypeName == "bonus" {
 		r.Month = true // 新作榜和打赏榜只有月榜
