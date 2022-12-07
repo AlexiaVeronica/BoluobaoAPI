@@ -11,10 +11,9 @@ import (
 )
 
 func GetContent(ChapID string) {
-	contents := book.GET_CHAPTER_CONTENT(ChapID)
-	//fmt.Println(contents)
-	if contents.Status.HTTPCode == 200 {
-		content_text := []byte("\n\n\n" + contents.Data.Title + "\n\n" + contents.Data.Expand.Content)
+	contents := book.GetContent(ChapID)
+	if contents != nil {
+		content_text := []byte("\n\n\n" + contents.Data.Expand.Content)
 		path := fmt.Sprintf("%v.txt", BookInfo.Data.NovelName)
 		fl, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE, 0644)
 		if err != nil {
@@ -24,8 +23,6 @@ func GetContent(ChapID string) {
 		if _, err = fl.Write(content_text); err != nil {
 			fmt.Println("Error:", err)
 		}
-	} else {
-		fmt.Println("Content Error:", contents.Status.Msg)
 	}
 }
 func GetChapter(book_id string) {
@@ -41,8 +38,8 @@ func GetChapter(book_id string) {
 var BookInfo Template.BookInfo
 
 func TestDownload(t *testing.T) {
-	book_id := "551946"
-	config.AppConfig.App = true
+	book_id := "512854"
+	config.AppConfig.App = false
 	BookInfo = book.GET_BOOK_INFORMATION(book_id)
 	if BookInfo.Status.HTTPCode == 200 {
 		fmt.Println("bookName:", BookInfo.Data.NovelName)
