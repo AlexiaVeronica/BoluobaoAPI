@@ -3,9 +3,9 @@ package search
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
+	"github.com/VeronicaAlexia/BoluobaoAPI/config"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"strconv"
-	"sync"
 )
 
 func GET_SEARCH(keyword string, page int) *Template.Search {
@@ -21,14 +21,12 @@ func GET_SEARCH(keyword string, page int) *Template.Search {
 }
 
 func GET_SEARCH_All(keyword string, lastPage int) []Template.BookInfoData {
-	var (
-		BookInfoList []Template.BookInfoData
-		wg           sync.WaitGroup
-	)
+	var BookInfoList []Template.BookInfoData
+	Thread := config.InitThreading(64)
 	for i := 0; i < lastPage; i++ {
-		wg.Add(1)
+		Thread.Add()
 		go func(page int) {
-			defer wg.Done()
+			defer Thread.Done()
 			response := GET_SEARCH(keyword, page)
 			if response != nil {
 				for _, data := range response.Data.Novels {
@@ -37,6 +35,6 @@ func GET_SEARCH_All(keyword string, lastPage int) []Template.BookInfoData {
 			}
 		}(i)
 	}
-	wg.Wait() // wait for all goroutines to finish
+	Thread.Wait() // wait for all goroutines to finish
 	return BookInfoList
 }

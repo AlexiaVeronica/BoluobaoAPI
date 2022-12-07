@@ -3,9 +3,9 @@ package tag
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
+	"github.com/VeronicaAlexia/BoluobaoAPI/config"
 	"github.com/liushuochen/gotable"
 	"strconv"
-	"sync"
 )
 
 func PrintTagList() {
@@ -23,14 +23,12 @@ func PrintTagList() {
 	fmt.Println(table)
 }
 func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
+	Thread := config.InitThreading(64)
 	var TagsList []Template.BookInfoData
-	var wg sync.WaitGroup
-	var ch = make(chan interface{}, 64)
 	for i := 1; i <= last_page; i++ {
-		wg.Add(1)
+		Thread.Add()
 		go func(page int) {
-			ch <- "ok"
-			defer wg.Done()
+			defer Thread.Done()
 			response := GET_TAG_INFO(TagID, page)
 			if response.Status.HTTPCode == 200 && response.Data != nil {
 				for _, data := range response.Data {
@@ -39,10 +37,9 @@ func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
 			} else {
 				fmt.Println(response.Status.Msg)
 			}
-			<-ch
 		}(i)
 	}
-	wg.Wait()
+	Thread.Wait()
 	fmt.Println("GET_TAG_INFO_ALL Done", len(TagsList))
 	return TagsList
 }

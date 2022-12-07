@@ -18,8 +18,7 @@ func TestSearch(t *testing.T) {
 
 func TestSearchAll(t *testing.T) {
 	config.AppConfig.App = true
-	response_list := search.GET_SEARCH_All("血姬", 30)
-
+	response_list := search.GET_SEARCH_All("血姬", 60)
 	if len(response_list) == 0 {
 		fmt.Println("没有搜索到结果,请检查关键词是否正确")
 	} else {
