@@ -3,7 +3,7 @@ package search
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/threading"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"strconv"
 )
@@ -22,7 +22,7 @@ func GET_SEARCH(keyword string, page int) *Template.Search {
 
 func GET_SEARCH_All(keyword string, lastPage int) []Template.BookInfoData {
 	var BookInfoList []Template.BookInfoData
-	Thread := config.InitThreading(64)
+	Thread := threading.InitThreading(64)
 	for i := 0; i < lastPage; i++ {
 		Thread.Add()
 		go func(page int) {

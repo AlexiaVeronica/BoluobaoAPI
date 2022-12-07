@@ -3,7 +3,7 @@ package tag
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/threading"
 	"github.com/liushuochen/gotable"
 	"strconv"
 )
@@ -23,7 +23,7 @@ func PrintTagList() {
 	fmt.Println(table)
 }
 func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
-	Thread := config.InitThreading(64)
+	Thread := threading.InitThreading(64)
 	var TagsList []Template.BookInfoData
 	for i := 1; i <= last_page; i++ {
 		Thread.Add()
