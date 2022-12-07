@@ -9,7 +9,7 @@ func TagsParams(TagID string, page int, size string) map[string]string {
 		"size":           size,
 		"charcountbegin": "0",
 		"updatedays":     "-1",
-		"expand":         "chapterCount,bigBgBanner,bigNovelCover,typeName,intro,fav,ticket,pointCount,tags,sysTags,signlevel,discount,discountExpireDate,totalNeedFireMoney,rankinglist,originTotalNeedFireMoney,firstchapter,latestchapter,latestcommentdate,essaytag,auditCover,preOrderInfo,customTag,topic,homeFlag,isbranch",
+		"expand":         "chapterCount,bigBgBanner,bigNovelCover,typeName,intro,fav,ticket,pointCount,tags,sysTags,signlevel,rankinglist,firstchapter,latestchapter,essaytag,auditCover,preOrderInfo,customTag,topic,isbranch",
 		"sort":           "latest",
 		"page":           strconv.Itoa(page),
 		"charcountend":   "0",
