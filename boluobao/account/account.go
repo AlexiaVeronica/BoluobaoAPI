@@ -18,6 +18,12 @@ func GET_ACCOUNT_MONEY_INFORMATION() Template.Account {
 	return Account
 }
 
+func GET_ACCOUNT_IP() Template.AccountIP {
+	var AccountIP Template.AccountIP
+	request.Get("position").NewRequests().Unmarshal(&AccountIP)
+	return AccountIP
+}
+
 // GET_USER_INFORMATION 公开用户信息
 func GET_USER_INFORMATION(AccountId string) Template.Users {
 	var Users Template.Users
@@ -30,7 +36,7 @@ func GET_USER_INFORMATION(AccountId string) Template.Users {
 func GET_USER_WORKS(AccountId string) Template.AuthorInfo {
 	var AuthorInfo Template.AuthorInfo
 	params := map[string]string{"expand": "typeName,sysTags,isbranch"}
-	request.Get("users/" + AccountId + "/novels").NewRequests().AddAll(params).Unmarshal(&AuthorInfo).WriteResultString()
+	request.Get("users/" + AccountId + "/novels").NewRequests().AddAll(params).Unmarshal(&AuthorInfo)
 	return AuthorInfo
 }
 

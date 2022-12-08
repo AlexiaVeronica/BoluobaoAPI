@@ -27,3 +27,12 @@ type AuthorInfo struct {
 	Status Status         `json:"status"`
 	Data   []BookInfoData `json:"data"`
 }
+
+type AccountIP struct {
+	Status Status `json:"status"`
+	Data   struct {
+		IP          string `json:"ip"`
+		Location    string `json:"location"`
+		CountryCode int    `json:"countryCode"`
+	} `json:"data"`
+}
