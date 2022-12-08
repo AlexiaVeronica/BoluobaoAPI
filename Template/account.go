@@ -1,5 +1,13 @@
 package Template
 
+type Users struct {
+	Status Status `json:"status"`
+	Data   struct {
+		AccountID int    `json:"accountId"`
+		UserName  string `json:"userName"`
+		NickName  string `json:"nickName"`
+	} `json:"data"`
+}
 type Account struct {
 	Status Status `json:"status"`
 	Data   struct {
@@ -14,4 +22,8 @@ type Account struct {
 		PhoneNum     string `json:"phoneNum"`
 		RegisterDate string `json:"registerDate"`
 	} `json:"data"`
+}
+type AuthorInfo struct {
+	Status Status         `json:"status"`
+	Data   []BookInfoData `json:"data"`
 }
