@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"strconv"
 )
 
 func GET_ACCOUNT_INFORMATION() Template.Account {
@@ -38,6 +39,14 @@ func GET_USER_WORKS(AccountId string) Template.AuthorInfo {
 	params := map[string]string{"expand": "typeName,sysTags,isbranch"}
 	request.Get("users/" + AccountId + "/novels").NewRequests().AddAll(params).Unmarshal(&AuthorInfo)
 	return AuthorInfo
+}
+
+// GET_USER_COMMENT 用户评论信息
+func GET_USER_COMMENT(AccountId string, page int) Template.AccountComment {
+	var AccountComment Template.AccountComment
+	params := map[string]string{"expand": "novels,comics,albums,tags,sysTags,authorName", "size": "20", "page": strconv.Itoa(page)}
+	request.Get("users/" + AccountId + "/dynamics").NewRequests().AddAll(params).Unmarshal(&AccountComment)
+	return AccountComment
 }
 
 func LOGIN_ACCOUNT(username, password string) string {
