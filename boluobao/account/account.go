@@ -9,7 +9,8 @@ import (
 
 func GET_ACCOUNT_INFORMATION() Template.Account {
 	var Account Template.Account
-	request.Get("user").NewRequests().Unmarshal(&Account)
+	params := map[string]string{"expand": "vipInfo,welfareCoin,isRealNameAuth,changeNickNameInfo,welfareMoney,redpacketCode,useWelfaresys,usedRedpacketCode,hasOrderChapWithFireMoney,hasUnlockChapWithAd,hasActiveUnlockChapWithAd,hasOrderedVipChaps,hasPaidFirstTime,growup,newVip"}
+	request.Get("user").NewRequests().AddAll(params).Unmarshal(&Account)
 	return Account
 }
 
