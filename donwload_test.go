@@ -6,12 +6,13 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/book"
 	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"os"
-	"strconv"
 	"testing"
 )
 
+var BookInfo Template.BookInfo
+
 func GetContent(ChapID string) {
-	contents := book.GetContent(ChapID)
+	contents := book.Content(ChapID)
 	if contents != nil {
 		content_text := []byte("\n\n\n" + contents.Data.Expand.Content)
 		path := fmt.Sprintf("%v.txt", BookInfo.Data.NovelName)
@@ -25,17 +26,6 @@ func GetContent(ChapID string) {
 		}
 	}
 }
-func GetChapter(book_id string) {
-	for _, v := range book.GET_CATALOGUE(book_id).Data.VolumeList {
-		fmt.Println("VolumeName:", v.Title)
-		for _, v2 := range v.ChapterList {
-			fmt.Println("	ChapterName:", v2.Title)
-			GetContent(strconv.Itoa(v2.ChapID))
-		}
-	}
-}
-
-var BookInfo Template.BookInfo
 
 func TestDownload(t *testing.T) {
 	book_id := "512854"
@@ -52,7 +42,9 @@ func TestDownload(t *testing.T) {
 			[]byte(BookInfo.Data.NovelName+"\n\n"), 0777); err != nil {
 			fmt.Println(err)
 		}
-		GetChapter(strconv.Itoa(BookInfo.Data.NovelID))
+		for _, ChapID := range book.Catalogue(book_id) {
+			GetContent(ChapID)
+		}
 	} else {
 		fmt.Println("BookInfo Error:", BookInfo.Status.Msg)
 	}

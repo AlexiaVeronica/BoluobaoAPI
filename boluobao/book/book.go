@@ -3,32 +3,31 @@ package book
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"strconv"
 	"strings"
 )
 
-func GET_BOOK_INFORMATION(NovelId string) Template.BookInfo {
-	var BookInfo Template.BookInfo
-	expand := "chapterCount,bigBgBanner,bigNovelCover,typeName,intro,fav,ticket,pointCount,tags,sysTags,signlevel,discount,discountExpireDate,totalNeedFireMoney,rankinglist,originTotalNeedFireMoney,firstchapter,latestchapter,latestcommentdate,essaytag,auditCover,preOrderInfo,customTag,topic,unauditedCustomtag,homeFlag,isbranch"
-	request.Get("novels/"+NovelId).Add("expand", expand).NewRequests().Unmarshal(&BookInfo)
-	return BookInfo
+func Catalogue(book_id string) []string {
+	var chapter_id_list []string
+	response := GET_CATALOGUE(book_id)
+	if response.Status.HTTPCode != 200 {
+		fmt.Println("Catalog Error:", response.Status.Msg)
+		return nil
+	}
+
+	for index, volume := range response.Data.VolumeList {
+		fmt.Println("VolumeIndex:", index, "\tVolumeName:", volume.Title)
+		for _, chapter := range volume.ChapterList {
+			fmt.Println("	ChapterIndex:", chapter.ChapOrder, "\tChapterName:", chapter.Title)
+			if chapter.OriginNeedFireMoney == 0 {
+				chapter_id_list = append(chapter_id_list, strconv.Itoa(chapter.ChapID))
+			}
+		}
+	}
+	return chapter_id_list
 }
 
-func GET_CATALOGUE(NovelID string) Template.Catalogue {
-	var Catalogue Template.Catalogue
-	request.Get(fmt.Sprintf("novels/%v/dirs", NovelID)).Add("expand", "originNeedFireMoney").NewRequests().
-		Unmarshal(&Catalogue)
-	return Catalogue
-
-}
-
-func GET_CHAPTER_CONTENT(chapter_id string) Template.Content {
-	var Content Template.Content
-	request.Get("Chaps/"+chapter_id).Add("expand", "content").NewRequests().Unmarshal(&Content)
-	return Content
-}
-
-func GetContent(chapter_id string) *Template.Content {
+func Content(chapter_id string) *Template.Content {
 	var ContentText string
 	response := GET_CHAPTER_CONTENT(chapter_id)
 	if response.Status.HTTPCode == 200 {
