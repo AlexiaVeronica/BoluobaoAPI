@@ -29,7 +29,10 @@ func GetContent(ChapID string) {
 
 func TestDownload(t *testing.T) {
 	book_id := "512854"
-	config.AppConfig.App = false
+	config.AppConfig.App = true
+	config.AppConfig.DeviceId = ""
+	config.AppConfig.AppKey = ""
+
 	BookInfo = book.GET_BOOK_INFORMATION(book_id)
 	if BookInfo.Status.HTTPCode == 200 {
 		fmt.Println("bookName:", BookInfo.Data.NovelName)

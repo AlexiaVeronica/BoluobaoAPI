@@ -5,6 +5,9 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
+	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
+	"github.com/google/uuid"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -19,6 +22,19 @@ func WeChatBasic() string {
 	Authorization := fmt.Sprintf("wxmpuser:194c5#b_47Fc75676f:nonce=%v&deviceToken=null&timestamp=%v&sign=%v",
 		"d3htaW5pYXBw", timestamp, sign)
 	return base64.StdEncoding.EncodeToString([]byte(Authorization))
+}
+
+func Security() string {
+	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
+	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
+	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(config.AppConfig.DeviceId) + config.AppConfig.AppKey))
+	security_params := url.Values{
+		"nonce":       {uuId},
+		"timestamp":   {TimeStamp},
+		"devicetoken": {strings.ToUpper(config.AppConfig.DeviceId)},
+		"sign":        {strings.ToUpper(hex.EncodeToString(newMd5.Sum(nil)))},
+	}
+	return security_params.Encode()
 }
 
 func (is *HttpUtils) set_headers() {
@@ -37,6 +53,7 @@ func (is *HttpUtils) set_headers() {
 		Header["Host"] = "api.sfacg.com"
 		Header["User-Agent"] = "boluobao/4.8.42(android;25)/XIAOMI/240a90cc-4c40-32c7-b44e-d4cf9e670605/XIAOMI"
 		Header["Authorization"] = "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE="
+		Header["SFSecurity"] = Security()
 
 	}
 	//fmt.Println(Header)
