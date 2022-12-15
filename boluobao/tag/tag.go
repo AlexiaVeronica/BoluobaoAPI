@@ -22,6 +22,7 @@ func PrintTagList() {
 	}
 	fmt.Println(table)
 }
+
 func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
 	Thread := threading.InitThreading(64)
 	var TagsList []Template.BookInfoData
@@ -35,7 +36,7 @@ func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
 					TagsList = append(TagsList, data)
 				}
 			} else {
-				fmt.Println(response.Status.Msg)
+				fmt.Println("GET_TAG_INFO_ALL Error:", response.Status.Msg)
 			}
 		}(i)
 	}
