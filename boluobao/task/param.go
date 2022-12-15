@@ -16,11 +16,14 @@ type MessageTask struct {
 	Status Template.Status `json:"status"`
 }
 
+func (task *Task) Data(entityType int) string {
+	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': %v}`, task.GetDay(), entityType)
+}
 func (task *Task) ReadDate() string {
-	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 2}`, task.GetDay())
+	return task.Data(2)
 }
 func (task *Task) ListenData() string {
-	return fmt.Sprintf(`{'seconds': 3605, 'readingDate': '%v', 'entityType': 3}`, task.GetDay())
+	return task.Data(3)
 }
 
 func (task *Task) GetDay() string {
