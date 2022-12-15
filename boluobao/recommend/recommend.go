@@ -5,9 +5,7 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 )
 
-type Recommend struct {
-	pushNames string
-}
+type Recommend struct{}
 
 func (recommend *Recommend) GET_SPECIAL_PUSH() Template.Specialpush {
 	var SpecialPush Template.Specialpush
