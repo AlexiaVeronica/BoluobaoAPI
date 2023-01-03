@@ -10,7 +10,7 @@ import (
 )
 
 func GetContent(bookInfo *Template.BookInfoData, ChapID string) {
-	contents := book.Content(ChapID)
+	contents := book.NovelContent(ChapID)
 	if contents != nil {
 		content_text := []byte("\n\n\n" + contents.Data.Expand.Content)
 		path := fmt.Sprintf("%v.txt", bookInfo.NovelName)
@@ -43,7 +43,7 @@ func TestDownload(t *testing.T) {
 			[]byte(bookInfo.NovelName+"\n\n"), 0777); err != nil {
 			fmt.Println(err)
 		}
-		for _, ChapID := range book.Catalogue(book_id) {
+		for _, ChapID := range book.NovelCatalogue(book_id) {
 			GetContent(bookInfo, ChapID)
 		}
 	}

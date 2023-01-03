@@ -16,7 +16,7 @@ func NovelInfo(book_id string) *Template.BookInfoData {
 	return nil
 }
 
-func Catalogue(book_id string) []string {
+func NovelCatalogue(book_id string) []string {
 	var chapter_id_list []string
 	response := GET_CATALOGUE(book_id)
 	if response.Status.HTTPCode != 200 {
@@ -36,7 +36,7 @@ func Catalogue(book_id string) []string {
 	return chapter_id_list
 }
 
-func Content(chapter_id string) *Template.Content {
+func NovelContent(chapter_id string) *Template.Content {
 	var ContentText string
 	response := GET_CHAPTER_CONTENT(chapter_id)
 	if response.Status.HTTPCode == 200 {
