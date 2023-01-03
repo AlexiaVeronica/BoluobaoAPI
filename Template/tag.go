@@ -16,3 +16,8 @@ type Tag struct {
 	Status Status         `json:"status"`
 	Data   []BookInfoData `json:"data"`
 }
+
+type SysTagList struct {
+	SysTagID int    `json:"sysTagId"`
+	TagName  string `json:"tagName"`
+}

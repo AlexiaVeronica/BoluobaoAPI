@@ -18,13 +18,10 @@ type BookInfoData struct {
 	SignStatus     string  `json:"signStatus"`
 	CategoryID     int     `json:"categoryId"`
 	Expand         struct {
-		TypeName string        `json:"typeName"`
-		Tags     []interface{} `json:"tags"`
-		SysTags  []struct {
-			SysTagID int    `json:"sysTagId"`
-			TagName  string `json:"tagName"`
-		} `json:"sysTags"`
-		Ticket        int `json:"ticket"`
+		TypeName      string        `json:"typeName"`
+		Tags          []interface{} `json:"tags"`
+		SysTags       []SysTagList  `json:"sysTags"`
+		Ticket        int           `json:"ticket"`
 		LatestChapter struct {
 			Title   string `json:"title"`
 			ChapID  int    `json:"chapId"`
