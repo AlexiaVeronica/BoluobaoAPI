@@ -7,18 +7,18 @@ import (
 	"strconv"
 )
 
-func (task *Task) COMPLETE_ALL() {
-	task.COMPLETE_SIGN_INFO()
+func (task *Task) NovelCompleteTas() {
+	task.NovelCompleteSignInfo()
 	TaskList := task.GET_TASKS_LIST()
 	if TaskList.Status.HTTPCode == 200 {
-		task.RECEIVE_TASK_ALL(TaskList) // receive all task
-		task.COMPLETE_TASK_LIST()       // complete all task
+		task.NovelCompleteReceiveTaskAll(TaskList) // receive all task
+		task.NovelCompleteTaskList()               // complete all task
 	} else {
 		fmt.Println("获取任务列表失败,MESSAGE:", TaskList.Status.Msg)
 	}
 }
 
-func (task *Task) COMPLETE_SIGN_INFO() {
+func (task *Task) NovelCompleteSignInfo() {
 	SignIn := task.PUT_SIGN_INFO()
 	if SignIn.Status.HTTPCode == 200 {
 		fmt.Println("sign in success, date: ", task.GetDay())
@@ -28,7 +28,7 @@ func (task *Task) COMPLETE_SIGN_INFO() {
 
 }
 
-func (task *Task) RECEIVE_TASK_ALL(TaskList Template.Task) {
+func (task *Task) NovelCompleteReceiveTaskAll(TaskList Template.Task) {
 	for _, data := range TaskList.Data {
 		TaskInfo := task.POST_RECEIVE_TASK(strconv.Itoa(data.TaskId))
 		if TaskInfo.Status.ErrorCode == 200 {
@@ -41,7 +41,7 @@ func (task *Task) RECEIVE_TASK_ALL(TaskList Template.Task) {
 	}
 }
 
-func (task *Task) COMPLETE_TASK_LIST() {
+func (task *Task) NovelCompleteTaskList() {
 	for i, url := range ReadTaskList {
 		fmt.Println("complete task No:", i+1)
 		if url == "user/tasks/4" && task.AccountId != "" {

@@ -13,5 +13,5 @@ func TestTask(t *testing.T) {
 	config.AppConfig.Cookie = ""
 	accounts := account.GET_ACCOUNT_INFORMATION()
 	Tasks := task.Task{AccountId: strconv.Itoa(accounts.Data.AccountID)}
-	Tasks.COMPLETE_ALL()
+	Tasks.NovelCompleteTas()
 }
