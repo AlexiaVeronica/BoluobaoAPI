@@ -7,6 +7,15 @@ import (
 	"strings"
 )
 
+func NovelInfo(book_id string) *Template.BookInfoData {
+	if response := GET_BOOK_INFORMATION(book_id); response.Status.HTTPCode == 200 {
+		return &response.Data
+	} else {
+		fmt.Println("BookInfo Error:", response.Status.Msg)
+	}
+	return nil
+}
+
 func Catalogue(book_id string) []string {
 	var chapter_id_list []string
 	response := GET_CATALOGUE(book_id)
