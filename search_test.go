@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/search"
 	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"testing"
@@ -18,7 +19,7 @@ func TestSearch(t *testing.T) {
 
 func TestSearchAll(t *testing.T) {
 	config.AppConfig.App = true
-	response_list := search.NovelSearch("血姬", 60)
+	response_list := boluobao.API.Search.NovelSearch("血姬", 2)
 	if len(response_list) == 0 {
 		fmt.Println("没有搜索到结果,请检查关键词是否正确")
 	} else {

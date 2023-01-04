@@ -5,7 +5,9 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/threading"
 )
 
-func NovelSearch(keyword string, lastPage int) []Template.BookInfoData {
+type Search struct{}
+
+func (s *Search) NovelSearch(keyword string, lastPage int) []Template.BookInfoData {
 	var BookInfoList []Template.BookInfoData
 	Thread := threading.InitThreading(64)
 	for i := 0; i < lastPage; i++ {
