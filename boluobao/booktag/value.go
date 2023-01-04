@@ -1,4 +1,4 @@
-package tag
+package booktag
 
 import "strconv"
 

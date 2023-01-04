@@ -1,4 +1,4 @@
-package tag
+package booktag
 
 import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
