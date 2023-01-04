@@ -8,6 +8,7 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/recommend"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/search"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/tag"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/task"
 )
 
 type Boluobao struct {
@@ -18,6 +19,7 @@ type Boluobao struct {
 	Tags      *tag.Tags
 	User      *account.User
 	Recommend *recommend.Recommend
+	Task      *task.Task
 }
 
 var API = Boluobao{
@@ -28,4 +30,5 @@ var API = Boluobao{
 	Tags:      &tag.Tags{},
 	User:      &account.User{},
 	Recommend: &recommend.Recommend{},
+	Task:      &task.Task{},
 }

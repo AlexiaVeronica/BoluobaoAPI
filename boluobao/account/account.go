@@ -1,17 +1,25 @@
 package account
 
-import "fmt"
+import (
+	"fmt"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
+)
 
 type User struct{}
 
-func (u *User) UserInformation() {
+func (u *User) UserInformation() *Template.AccountData {
 	response := GET_ACCOUNT_INFORMATION()
 	if response.Status.HTTPCode == 200 {
-		fmt.Println("用户名:", response.Data.NickName)
-		//response2 := GET_ACCOUNT_MONEY_INFORMATION()
-		//fmt.Println("余额:", response2.Data.)
-
+		return &response.Data
 	} else {
 		fmt.Println("获取用户信息失败:", response.Status.Msg)
+		return nil
 	}
+}
+
+func (u *User) ShowUserInformation(AccountData *Template.AccountData) {
+	fmt.Println("用户名:", AccountData.NickName)
+	fmt.Println("用户ID:", AccountData.AccountID)
+	//fmt.Println("用户等级:", AccountData)
+
 }
