@@ -2,7 +2,9 @@ package account
 
 import "fmt"
 
-func UserInformation() {
+type User struct{}
+
+func (u *User) UserInformation() {
 	response := GET_ACCOUNT_INFORMATION()
 	if response.Status.HTTPCode == 200 {
 		fmt.Println("用户名:", response.Data.NickName)
