@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/rank"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
 	"reflect"
 	"testing"
 )
@@ -10,7 +10,7 @@ import (
 func RangeStruct() []string {
 	// 遍历rank.TypeName
 	var typeName []string
-	v := reflect.ValueOf(rank.TypeName)
+	v := reflect.ValueOf(boluobao.API.Rank.TypeNameInit())
 	count := v.NumField()
 	for i := 0; i < count; i++ {
 		f := v.Field(i)
@@ -26,8 +26,10 @@ func RangeStruct() []string {
 func TestRanks(t *testing.T) {
 	index := 0
 	for _, value := range RangeStruct() {
-		ranks := rank.Rank{TypeName: value, Month: true, Page: 0}
-		for _, i2 := range ranks.GET_SFACG_RANKS().Data {
+		boluobao.API.Rank.TypeName = value
+		boluobao.API.Rank.Month = true
+		boluobao.API.Rank.Page = 0
+		for _, i2 := range boluobao.API.Rank.GET_SFACG_RANKS().Data {
 			index++
 			println(index, i2.NovelName)
 			var a []string

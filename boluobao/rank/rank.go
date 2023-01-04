@@ -14,20 +14,24 @@ type Rank struct {
 	Size     int
 }
 
-var TypeName = struct {
+type TypeName struct {
 	ViewRank   string
 	BestRank   string
 	NewRank    string
 	TicketRank string
 	MarkRank   string
 	BonusRank  string
-}{
-	ViewRank:   "view",
-	BestRank:   "sale",
-	NewRank:    "newhit",
-	TicketRank: "ticket",
-	MarkRank:   "mark",
-	BonusRank:  "bonus",
+}
+
+func (r *Rank) TypeNameInit() TypeName {
+	return TypeName{
+		ViewRank:   "view",
+		BestRank:   "sale",
+		NewRank:    "newhit",
+		TicketRank: "ticket",
+		MarkRank:   "mark",
+		BonusRank:  "bonus",
+	}
 }
 
 func (r *Rank) rank_api() string {
