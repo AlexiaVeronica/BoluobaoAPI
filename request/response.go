@@ -1,12 +1,17 @@
 package request
 
-import (
-	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
-)
+var AppConfig = Config{}
+
+type Config struct {
+	App      bool
+	Cookie   string
+	AppKey   string
+	DeviceId string
+}
 
 func ApiHost() string {
 	var Host string
-	if config.AppConfig.App {
+	if AppConfig.App {
 		Host = "https://api.sfacg.com/"
 	} else {
 		Host = "https://minipapi.sfacg.com/pas/mpapi/"

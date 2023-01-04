@@ -3,7 +3,6 @@ package request
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"io"
 	"net/http"
 	"net/url"
@@ -25,7 +24,7 @@ func NewHttpUtils(host string, path string, method string) *HttpUtils {
 		method:     method,
 		query_data: &url.Values{},
 		url:        host + path,
-		Cookie:     config.AppConfig.Cookie,
+		Cookie:     AppConfig.Cookie,
 	}
 }
 

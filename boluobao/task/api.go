@@ -3,7 +3,6 @@ package task
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"github.com/google/uuid"
 )
@@ -47,15 +46,15 @@ func (task *Task) PUT_SHARE(account_id string) {
 	// This interaction logic is so bad, I will refactor it, but now I will leave it like this.
 	// I will refactor it when I have time.
 	var change bool
-	if config.AppConfig.App {
+	if request.AppConfig.App {
 		change = true
-		config.AppConfig.App = false
+		request.AppConfig.App = false
 	} else {
 		change = false
 	}
 	request.Put("user/tasks?taskId=4&userId=" + account_id).AddString(`{"env": 0}`).NewRequests()
 
 	if change {
-		config.AppConfig.App = true // change back to app
+		request.AppConfig.App = true // change back to app
 	}
 }

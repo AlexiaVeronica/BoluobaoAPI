@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/book"
-	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/config"
 	"os"
 	"testing"
 )
@@ -32,9 +32,9 @@ func GetContent(bookInfo *Template.BookInfoData, ChapID string) {
 
 func main() {
 	book_id := "512854"
-	config.AppConfig.App = true
-	config.AppConfig.DeviceId = ""
-	config.AppConfig.AppKey = ""
+	request.AppConfig.App = true
+	request.AppConfig.DeviceId = ""
+	request.AppConfig.AppKey = ""
 
 	bookInfo := book.NovelInfo(book_id)
 	if bookInfo != nil {

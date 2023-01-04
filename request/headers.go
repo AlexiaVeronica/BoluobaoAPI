@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"fmt"
-	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"github.com/google/uuid"
 	"net/url"
 	"strconv"
@@ -27,11 +26,11 @@ func WeChatBasic() string {
 func Security() string {
 	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
 	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
-	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(config.AppConfig.DeviceId) + config.AppConfig.AppKey))
+	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(AppConfig.DeviceId) + AppConfig.AppKey))
 	security_params := url.Values{
 		"nonce":       {uuId},
 		"timestamp":   {TimeStamp},
-		"devicetoken": {strings.ToUpper(config.AppConfig.DeviceId)},
+		"devicetoken": {strings.ToUpper(AppConfig.DeviceId)},
 		"sign":        {strings.ToUpper(hex.EncodeToString(newMd5.Sum(nil)))},
 	}
 	return security_params.Encode()
