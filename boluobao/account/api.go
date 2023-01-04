@@ -50,17 +50,16 @@ func GET_USER_COMMENT(AccountId string, page int) Template.AccountComment {
 	return AccountComment
 }
 
-func LOGIN_ACCOUNT(username, password string) string {
+func LOGIN_ACCOUNT(username string, password string) string {
 	var Cookie string
 	params := map[string]string{"username": username, "password": password}
-	CookieJar := request.Post("sessions").AddAll(params).NewRequests().Unmarshal(&Template.Login).GetCookie()
+	response := request.Post("sessions").AddAll(params).NewRequests().Unmarshal(&Template.Login)
 	if Template.Login.Status.HTTPCode == 200 {
-		for _, cookie := range CookieJar {
+		for _, cookie := range response.GetCookie() {
 			Cookie += cookie.Name + "=" + cookie.Value + ";"
 		}
 		return Cookie
-	} else {
-		fmt.Println("login failed! error:", Template.Login.Status.Msg)
-		return ""
 	}
+	fmt.Println("login failed! error:", Template.Login.Status.Msg)
+	return ""
 }

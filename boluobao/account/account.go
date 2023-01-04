@@ -23,3 +23,20 @@ func (u *User) ShowUserInformation(AccountData *Template.AccountData) {
 	//fmt.Println("用户等级:", AccountData)
 
 }
+
+func (u *User) UserLogin(username string, password string, retry int) {
+	if retry <= 0 {
+		retry = 1
+	} else if retry > 3 {
+		retry = 3
+	}
+	for i := 0; i < retry; i++ {
+		response := LOGIN_ACCOUNT(username, password)
+		if response != "" {
+			fmt.Println("登录成功")
+			break
+		} else {
+			fmt.Println("retry login account:", i+1)
+		}
+	}
+}
