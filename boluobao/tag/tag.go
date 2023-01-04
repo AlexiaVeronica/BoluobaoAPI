@@ -8,7 +8,9 @@ import (
 	"strconv"
 )
 
-func PrintTagList() {
+type Tags struct{}
+
+func (t *Tags) PrintTagList() {
 	table, err := gotable.Create("tag_name", "tag_id")
 	if err != nil {
 		fmt.Println(err.Error())
@@ -23,14 +25,14 @@ func PrintTagList() {
 	fmt.Println(table)
 }
 
-func GET_TAG_INFO_ALL(TagID string, last_page int) []Template.BookInfoData {
+func (t *Tags) NovelTags(TagId string, last_page int) []Template.BookInfoData {
 	Thread := threading.InitThreading(64)
 	var TagsList []Template.BookInfoData
 	for i := 1; i <= last_page; i++ {
 		Thread.Add()
 		go func(page int) {
 			defer Thread.Done()
-			response := GET_TAG_INFO(TagID, page)
+			response := GET_TAG_INFO(TagId, page)
 			if response.Status.HTTPCode == 200 && response.Data != nil {
 				for _, data := range response.Data {
 					TagsList = append(TagsList, data)

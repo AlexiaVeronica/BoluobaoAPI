@@ -5,7 +5,9 @@ import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 )
 
-func NovelBookShelf() *[]Template.ShelfData {
+type BookShelf struct{}
+
+func (bs *BookShelf) NovelBookShelf() *[]Template.ShelfData {
 	response := GET_BOOK_SHELF_INFORMATION()
 	if response.Status.HTTPCode == 200 {
 		return &response.Data
