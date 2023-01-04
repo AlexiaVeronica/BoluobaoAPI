@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/book"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
 	"github.com/VeronicaAlexia/BoluobaoAPI/pkg/config"
 	"os"
 	"testing"
 )
 
 func GetContent(bookInfo *Template.BookInfoData, ChapID string) {
-	contents := book.NovelContent(ChapID)
+	contents := boluobao.API.Book.NovelContent(ChapID)
 	if contents != nil {
 		content_text := []byte("\n\n\n" + contents.Data.Expand.Content)
 		path := fmt.Sprintf("%v.txt", bookInfo.NovelName)
@@ -31,7 +31,7 @@ func TestDownload(t *testing.T) {
 	config.AppConfig.DeviceId = ""
 	config.AppConfig.AppKey = ""
 
-	bookInfo := book.NovelInfo(book_id)
+	bookInfo := boluobao.API.Book.NovelInfo(book_id)
 	if bookInfo != nil {
 		fmt.Println("bookName:", bookInfo.NovelName)
 		fmt.Println("AuthorName:", bookInfo.AuthorName)
@@ -43,7 +43,7 @@ func TestDownload(t *testing.T) {
 			[]byte(bookInfo.NovelName+"\n\n"), 0777); err != nil {
 			fmt.Println(err)
 		}
-		for _, ChapID := range book.NovelCatalogue(book_id) {
+		for _, ChapID := range boluobao.API.Book.NovelCatalogue(book_id) {
 			GetContent(bookInfo, ChapID)
 		}
 	}

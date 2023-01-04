@@ -7,7 +7,9 @@ import (
 	"strings"
 )
 
-func NovelInfo(book_id string) *Template.BookInfoData {
+type Books struct{}
+
+func (book *Books) NovelInfo(book_id string) *Template.BookInfoData {
 	if response := GET_BOOK_INFORMATION(book_id); response.Status.HTTPCode == 200 {
 		return &response.Data
 	} else {
@@ -16,14 +18,13 @@ func NovelInfo(book_id string) *Template.BookInfoData {
 	return nil
 }
 
-func NovelCatalogue(book_id string) []string {
+func (book *Books) NovelCatalogue(book_id string) []string {
 	var chapter_id_list []string
 	response := GET_CATALOGUE(book_id)
 	if response.Status.HTTPCode != 200 {
 		fmt.Println("Catalog Error:", response.Status.Msg)
 		return nil
 	}
-
 	for index, volume := range response.Data.VolumeList {
 		fmt.Println("VolumeIndex:", index, "\tVolumeName:", volume.Title)
 		for _, chapter := range volume.ChapterList {
@@ -36,7 +37,7 @@ func NovelCatalogue(book_id string) []string {
 	return chapter_id_list
 }
 
-func NovelContent(chapter_id string) *Template.Content {
+func (book *Books) NovelContent(chapter_id string) *Template.Content {
 	var ContentText string
 	response := GET_CHAPTER_CONTENT(chapter_id)
 	if response.Status.HTTPCode == 200 {
