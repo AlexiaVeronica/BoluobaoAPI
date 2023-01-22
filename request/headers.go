@@ -14,16 +14,14 @@ import (
 
 func (is *HttpUtils) WeChatBasic() string {
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
-	signString := "d3htaW5pYXBw" + timestamp + "null" + "xw3#a12-x"
 	signMd5 := md5.New()
-	signMd5.Write([]byte(signString))
+	signMd5.Write([]byte("d3htaW5pYXBw" + timestamp + "null" + "xw3#a12-x"))
 	sign := strings.ToUpper(hex.EncodeToString(signMd5.Sum(nil)))
-	Authorization := fmt.Sprintf("wxmpuser:194c5#b_47Fc75676f:nonce=%v&deviceToken=null&timestamp=%v&sign=%v",
-		"d3htaW5pYXBw", timestamp, sign)
-	return base64.StdEncoding.EncodeToString([]byte(Authorization))
+	wxmpuser := "wxmpuser:194c5#b_47Fc75676f:nonce=%v&deviceToken=null&timestamp=%v&sign=%v"
+	return base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf(wxmpuser, "d3htaW5pYXBw", timestamp, sign)))
 }
 
-func (is *HttpUtils) set_headers() {
+func (is *HttpUtils) SetHeaders() {
 	Header := make(map[string]string)
 	Header["Connection"] = "keep-alive"
 	if is.method == "POST" {
@@ -39,7 +37,7 @@ func (is *HttpUtils) set_headers() {
 		Header["Host"] = "api.sfacg.com"
 		Header["User-Agent"] = "boluobao/4.8.42(android;25)/XIAOMI/240a90cc-4c40-32c7-b44e-d4cf9e670605/XIAOMI"
 		Header["Authorization"] = "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE="
-		Header["SFSecurity"] = is.Security()
+		Header["SFSecurity"] = is.AppSecurity()
 
 	}
 	for HeaderKey, HeaderValue := range Header {
@@ -48,7 +46,7 @@ func (is *HttpUtils) set_headers() {
 	}
 }
 
-func (is *HttpUtils) Security() string {
+func (is *HttpUtils) AppSecurity() string {
 	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
 	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
 	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(is.Config.DeviceId) + is.Config.AppKey))

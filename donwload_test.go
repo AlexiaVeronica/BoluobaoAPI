@@ -29,7 +29,11 @@ func TestDownload(t *testing.T) {
 	book_id := "512854"
 	api.Request.App = true
 	api.Request.DeviceId = "240a90cc-4c40-32c7-b44e-d4cf9e670605"
-	api.Request.AppKey = "FMLxgOdsfxmN!Dt4"
+	api.Request.AppKey = ""
+	api.Request.Cookie = ""
+	if api.Request.Cookie == "" {
+		fmt.Println("you need to set cookie")
+	}
 	bookInfo := boluobao.API.Book.NovelInfo(book_id)
 	if bookInfo != nil {
 		fmt.Println("bookName:", bookInfo.NovelName)

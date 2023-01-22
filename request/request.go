@@ -46,7 +46,7 @@ func (is *HttpUtils) NewRequests() *HttpUtils {
 		panic(err)
 	}
 	is.result_body = nil
-	is.set_headers()
+	is.SetHeaders()
 
 	if response, ok := http.DefaultClient.Do(is.response); ok == nil {
 		is.cookie = response.Cookies()
