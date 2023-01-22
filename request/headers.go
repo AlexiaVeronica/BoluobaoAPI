@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-func WeChatBasic() string {
+func (is *HttpUtils) WeChatBasic() string {
 	timestamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
 	signString := "d3htaW5pYXBw" + timestamp + "null" + "xw3#a12-x"
 	signMd5 := md5.New()
@@ -22,19 +22,6 @@ func WeChatBasic() string {
 		"d3htaW5pYXBw", timestamp, sign)
 	return base64.StdEncoding.EncodeToString([]byte(Authorization))
 }
-
-//func Security() string {
-//	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
-//	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
-//	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(AppConfig.DeviceId) + AppConfig.AppKey))
-//	security_params := url.Values{
-//		"nonce":       {uuId},
-//		"timestamp":   {TimeStamp},
-//		"devicetoken": {strings.ToUpper(AppConfig.DeviceId)},
-//		"sign":        {strings.ToUpper(hex.EncodeToString(newMd5.Sum(nil)))},
-//	}
-//	return security_params.Encode()
-//}
 
 func (is *HttpUtils) set_headers() {
 	Header := make(map[string]string)
@@ -47,7 +34,7 @@ func (is *HttpUtils) set_headers() {
 	Header["Cookie"] = is.Cookie
 	if strings.Contains(is.url, "minipapi.sfacg.com") {
 		Header["sf-minip-info"] = "minip_novel/1.0.70(android;11)/wxmp"
-		Header["Authorization"] = "Basic " + WeChatBasic()
+		Header["Authorization"] = "Basic " + is.WeChatBasic()
 	} else {
 		Header["Host"] = "api.sfacg.com"
 		Header["User-Agent"] = "boluobao/4.8.42(android;25)/XIAOMI/240a90cc-4c40-32c7-b44e-d4cf9e670605/XIAOMI"
@@ -55,7 +42,6 @@ func (is *HttpUtils) set_headers() {
 		Header["SFSecurity"] = is.Security()
 
 	}
-	//fmt.Println(Header)
 	for HeaderKey, HeaderValue := range Header {
 		is.response.Header.Set(HeaderKey, HeaderValue)
 
