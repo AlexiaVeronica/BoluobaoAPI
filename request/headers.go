@@ -23,18 +23,18 @@ func WeChatBasic() string {
 	return base64.StdEncoding.EncodeToString([]byte(Authorization))
 }
 
-func Security() string {
-	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
-	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
-	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(AppConfig.DeviceId) + AppConfig.AppKey))
-	security_params := url.Values{
-		"nonce":       {uuId},
-		"timestamp":   {TimeStamp},
-		"devicetoken": {strings.ToUpper(AppConfig.DeviceId)},
-		"sign":        {strings.ToUpper(hex.EncodeToString(newMd5.Sum(nil)))},
-	}
-	return security_params.Encode()
-}
+//func Security() string {
+//	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
+//	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
+//	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(AppConfig.DeviceId) + AppConfig.AppKey))
+//	security_params := url.Values{
+//		"nonce":       {uuId},
+//		"timestamp":   {TimeStamp},
+//		"devicetoken": {strings.ToUpper(AppConfig.DeviceId)},
+//		"sign":        {strings.ToUpper(hex.EncodeToString(newMd5.Sum(nil)))},
+//	}
+//	return security_params.Encode()
+//}
 
 func (is *HttpUtils) set_headers() {
 	Header := make(map[string]string)
@@ -52,7 +52,7 @@ func (is *HttpUtils) set_headers() {
 		Header["Host"] = "api.sfacg.com"
 		Header["User-Agent"] = "boluobao/4.8.42(android;25)/XIAOMI/240a90cc-4c40-32c7-b44e-d4cf9e670605/XIAOMI"
 		Header["Authorization"] = "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE="
-		Header["SFSecurity"] = Security()
+		Header["SFSecurity"] = is.Security()
 
 	}
 	//fmt.Println(Header)
@@ -60,4 +60,17 @@ func (is *HttpUtils) set_headers() {
 		is.response.Header.Set(HeaderKey, HeaderValue)
 
 	}
+}
+
+func (is *HttpUtils) Security() string {
+	TimeStamp := strconv.FormatInt(time.Now().UnixNano()/1000000, 10)
+	uuId, newMd5 := strings.ToUpper(uuid.New().String()), md5.New()
+	newMd5.Write([]byte(uuId + TimeStamp + strings.ToUpper(is.Config.DeviceId) + is.Config.AppKey))
+	security_params := url.Values{
+		"nonce":       {uuId},
+		"timestamp":   {TimeStamp},
+		"devicetoken": {strings.ToUpper(is.Config.DeviceId)},
+		"sign":        {strings.ToUpper(hex.EncodeToString(newMd5.Sum(nil)))},
+	}
+	return security_params.Encode()
 }

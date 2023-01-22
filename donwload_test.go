@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/api"
 	"os"
 	"testing"
 )
@@ -27,10 +27,9 @@ func GetContent(bookInfo *Template.BookInfoData, ChapID string) {
 
 func TestDownload(t *testing.T) {
 	book_id := "512854"
-	request.AppConfig.App = true
-	request.AppConfig.DeviceId = ""
-	request.AppConfig.AppKey = ""
-
+	api.Request.App = true
+	api.Request.DeviceId = "240a90cc-4c40-32c7-b44e-d4cf9e670605"
+	api.Request.AppKey = "FMLxgOdsfxmN!Dt4"
 	bookInfo := boluobao.API.Book.NovelInfo(book_id)
 	if bookInfo != nil {
 		fmt.Println("bookName:", bookInfo.NovelName)

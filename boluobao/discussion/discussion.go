@@ -2,7 +2,7 @@ package discussion
 
 import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/api"
 	"strconv"
 )
 
@@ -14,6 +14,6 @@ func Feeds(page int, filter string) *Template.Discussion {
 	}
 	var Discussion Template.Discussion
 	params := map[string]string{"filter": filter, "expand": "novels,comics,albums,tags,sysTags,authorName,hasfollowed", "page": strconv.Itoa(page), "size": "20"}
-	request.Get("user/feeds").AddAll(params).NewRequests().Unmarshal(&Discussion)
+	api.Get("user/feeds").AddAll(params).NewRequests().Unmarshal(&Discussion)
 	return &Discussion
 }

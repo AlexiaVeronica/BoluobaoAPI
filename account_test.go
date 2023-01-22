@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/account"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/api"
 	"testing"
 )
 
 func TestBook(t *testing.T) {
 	AccountId := ""
-	request.AppConfig.App = false
+	api.Request.App = false
 	fmt.Println(account.GET_USER_COMMENT(AccountId, 0))
 	account.LOGIN_ACCOUNT("username", "password")
 	account.GET_ACCOUNT_INFORMATION()

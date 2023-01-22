@@ -3,7 +3,7 @@ package task
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/api"
 	"strconv"
 )
 
@@ -50,7 +50,7 @@ func (task *Task) NovelCompleteTaskList() {
 			task.PUT_LISTEN_TIME()
 			task.PUT_READING_TIME()
 		}
-		request.Put(url).AddString(task.ListenData()).NewRequests()
+		api.Put(url).AddString(task.ListenData()).NewRequests()
 	}
 
 }

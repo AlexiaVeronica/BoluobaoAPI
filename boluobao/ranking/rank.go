@@ -2,7 +2,7 @@ package ranking
 
 import (
 	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/api"
 	"strconv"
 )
 
@@ -67,6 +67,6 @@ func (r *Rank) GET_SFACG_RANKS() Template.Rank {
 	params["page"] = strconv.Itoa(r.Page)
 	params["rtype"] = r.TypeName
 	params["size"] = strconv.Itoa(r.Size)
-	request.Get(r.rank_api()).AddAll(params).NewRequests().Unmarshal(&RankStruct)
+	api.Get(r.rank_api()).AddAll(params).NewRequests().Unmarshal(&RankStruct)
 	return RankStruct
 }

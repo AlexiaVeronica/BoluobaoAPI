@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao"
+	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/api"
 	"github.com/VeronicaAlexia/BoluobaoAPI/boluobao/search"
-	"github.com/VeronicaAlexia/BoluobaoAPI/request"
 	"testing"
 )
 
 func TestSearch(t *testing.T) {
-	request.AppConfig.App = true
+	api.Request.App = true
 	response := search.GET_SEARCH("斗罗大陆", 0)
 	for i, data := range response.Data.Novels {
 		fmt.Println("index:", i, "\tbookID:", data.NovelID, "\tbookName:", data.NovelName)
@@ -18,7 +18,7 @@ func TestSearch(t *testing.T) {
 }
 
 func TestSearchAll(t *testing.T) {
-	request.AppConfig.App = true
+	api.Request.App = true
 	response_list := boluobao.API.Search.NovelSearch("血姬", 2)
 	if len(response_list) == 0 {
 		fmt.Println("没有搜索到结果,请检查关键词是否正确")

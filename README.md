@@ -2,7 +2,7 @@
 
 ## example
 
-```go
+```
 package main
 
 import (
@@ -32,9 +32,9 @@ func GetContent(bookInfo *Template.BookInfoData, ChapID string) {
 
 func main() {
 	book_id := "512854"
-	request.AppConfig.App = true
-	request.AppConfig.DeviceId = ""
-	request.AppConfig.AppKey = ""
+	api.Request.App = true
+	api.Request.DeviceId = ""
+	api.Request.AppKey = ""
 
 	bookInfo := book.NovelInfo(book_id)
 	if bookInfo != nil {

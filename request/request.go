@@ -3,6 +3,7 @@ package request
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/VeronicaAlexia/BoluobaoAPI/Template"
 	"io"
 	"net/http"
 	"net/url"
@@ -17,14 +18,16 @@ type HttpUtils struct {
 	query_data     *url.Values
 	DataFormString string
 	result_body    []byte
+	Config         Template.ConfigRequest
 }
 
-func NewHttpUtils(host string, path string, method string) *HttpUtils {
+func NewHttpUtils(host string, path string, method string, Config Template.ConfigRequest) *HttpUtils {
 	return &HttpUtils{
 		method:     method,
 		query_data: &url.Values{},
 		url:        host + path,
-		Cookie:     AppConfig.Cookie,
+		Cookie:     Config.Cookie,
+		Config:     Config,
 	}
 }
 
