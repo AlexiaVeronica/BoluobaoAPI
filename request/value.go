@@ -14,7 +14,7 @@ func (is *HttpUtils) PutData() *strings.Reader {
 	return strings.NewReader(is.DataFormString)
 }
 func (is *HttpUtils) GetResult() string {
-	return string(is.result_body)
+	return string(is.ResultBody)
 }
 
 func (is *HttpUtils) WriteResultString() {

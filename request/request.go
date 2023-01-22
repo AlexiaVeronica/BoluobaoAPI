@@ -17,7 +17,7 @@ type HttpUtils struct {
 	response       *http.Request
 	query_data     *url.Values
 	DataFormString string
-	result_body    []byte
+	ResultBody     []byte
 	Config         Template.ConfigRequest
 }
 
@@ -45,12 +45,12 @@ func (is *HttpUtils) NewRequests() *HttpUtils {
 	if err != nil {
 		panic(err)
 	}
-	is.result_body = nil
+	is.ResultBody = nil
 	is.SetHeaders()
 
 	if response, ok := http.DefaultClient.Do(is.response); ok == nil {
 		is.cookie = response.Cookies()
-		is.result_body, _ = io.ReadAll(response.Body)
+		is.ResultBody, _ = io.ReadAll(response.Body)
 	} else {
 		fmt.Println("NewRequests:", ok)
 	}
@@ -58,7 +58,7 @@ func (is *HttpUtils) NewRequests() *HttpUtils {
 }
 
 func (is *HttpUtils) Unmarshal(s any) *HttpUtils {
-	err := json.Unmarshal(is.result_body, s)
+	err := json.Unmarshal(is.ResultBody, s)
 	if err != nil {
 		fmt.Println("Unmarshal: ", err)
 	}

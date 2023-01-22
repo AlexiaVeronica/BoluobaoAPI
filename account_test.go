@@ -11,7 +11,16 @@ func TestBook(t *testing.T) {
 	AccountId := ""
 	api.Request.App = false
 	fmt.Println(account.GET_USER_COMMENT(AccountId, 0))
-	account.LOGIN_ACCOUNT("username", "password")
+	cookie := account.LOGIN_ACCOUNT("username", "password")
+	if cookie != "" {
+		fmt.Println("登录成功")
+		api.Request.Cookie = cookie
+	} else {
+		fmt.Println("登录失败")
+	}
+	if api.Request.Cookie == "" {
+		t.Error("please set cookie")
+	}
 	account.GET_ACCOUNT_INFORMATION()
 	//account.GET_ACCOUNT_MONEY_INFORMATION()
 	account.GET_USER_INFORMATION(AccountId)
